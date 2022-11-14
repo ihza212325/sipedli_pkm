@@ -1,7 +1,7 @@
 # P3-Challenge-1
 
-- Tema Aplikasi: ...
-- CSS Framework: ...
+- Tema Aplikasi: PORTAL JOBS
+- CSS Framework: TAILWIND
 
 Struktur Folder:
 
