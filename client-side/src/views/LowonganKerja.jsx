@@ -1,3 +1,5 @@
+import Aside from "../components/Aside";
+import CardJob from "../components/CardJob";
 const LowonganKerja = () => {
   return (
     <>
@@ -27,7 +29,21 @@ const LowonganKerja = () => {
                   Cari
                 </a>
               </div>
-              {/*  */}
+              <div className="py-8 font-bold">
+                <p>2021 lowongan kerja di Indonesia</p>
+              </div>
+              {/* main page */}
+              <div className="w-full flex flex-row">
+                {/* aside */}
+                <Aside />
+                <div className="w-9/12 flex flex-row flex-wrap h-44 gap-10 justify-end">
+                  {/* card Job */}
+                  <CardJob />
+                  <CardJob />
+                  <CardJob />
+                  <CardJob />
+                </div>
+              </div>
             </div>
           </div>
         </div>
