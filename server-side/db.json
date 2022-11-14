@@ -42,5 +42,25 @@
   "Skills": [
     { "id": 1, "jobId": 1, "name": "javascript", "level": "beginner" },
     { "id": 2, "jobId": 1, "name": "vue", "level": "beginner" }
+  ],
+  "Users": [
+    {
+      "id": 1,
+      "username": "ihza",
+      "email": "ihza@gmail.com",
+      "password": "123",
+      "role": "admin",
+      "phoneNumber": "089523652573",
+      "address": "Rengel Tuban"
+    },
+    {
+      "id": 2,
+      "username": "emilia",
+      "email": "emilia@gmail.com",
+      "password": "123",
+      "role": "admin",
+      "phoneNumber": "089523652573",
+      "address": "Rengel Tuban"
+    }
   ]
 }
