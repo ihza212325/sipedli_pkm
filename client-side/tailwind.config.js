@@ -11,6 +11,13 @@ module.exports = {
           1000: "#017eb7",
           1100: "#F2F8FA",
         },
+        red: {
+          1000: "#EC272B",
+        },
+      },
+      boxShadow: {
+        "4xl": "-10px 10px 0px 0px rgba(255,242,64,1);",
+        "5xl": "6px 7px 0px 0px rgba(255,242,64,1)",
       },
     },
   },

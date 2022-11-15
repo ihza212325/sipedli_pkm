@@ -1,56 +1,16 @@
 import { useState } from "react";
-const NavBar = () => {
-  const [showModal, setShowModal] = useState(false);
 
+const FormLogin = () => {
+  const [showModal, setShowModal] = useState(false);
   return (
     <>
-      <div className="relative bg-white">
-        <div className=" w-11/12 mx-auto px-4 sm:px-6">
-          <div className="flex justify-between items-center border-b-2 border-gray-100 py-5 md:justify-start md:space-x-10">
-            {/* kiri logo dan menu */}
-            <div className="flex justify-start lg:w-0 lg:flex-1 space-x-10">
-              <a href="test">
-                <span className="sr-only">Workflow</span>
-                <img
-                  className="h-8 w-auto sm:h-10"
-                  src="https://images.glints.com/unsafe/106x0/glints-dashboard.s3.amazonaws.com/images/logo.png"
-                  alt=""
-                />
-              </a>
-              <nav className="hidden md:flex space-x-10">
-                <a
-                  href="test"
-                  className="border-b-2 border-black text-base font-medium text-gray-500 hover:text-gray-900"
-                >
-                  LOWONGAN KERJA
-                </a>
-                <a
-                  href="test"
-                  className="border-b-2 border-black text-base font-medium text-gray-500 hover:text-gray-900"
-                >
-                  PERUSAHAAN
-                </a>
-              </nav>
-            </div>
-
-            <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-              <button
-                type="button"
-                onClick={() => setShowModal(true)}
-                className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-              >
-                Sign in
-              </button>
-              <a
-                href="test"
-                className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-              >
-                Sign up
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <button
+        className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        type="button"
+        onClick={() => setShowModal(true)}
+      >
+        Open regular modal
+      </button>
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -65,7 +25,7 @@ const NavBar = () => {
                     onClick={() => setShowModal(false)}
                   >
                     <svg
-                      className="w-6 h-6"
+                      class="w-6 h-6"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +55,7 @@ const NavBar = () => {
                       type="email"
                       id="email"
                       aria-describedby="helper-text-explanation"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Input your Password"
                     />
                   </div>
@@ -199,4 +159,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default FormLogin;

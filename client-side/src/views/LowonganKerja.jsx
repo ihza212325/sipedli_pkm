@@ -1,5 +1,6 @@
 import Aside from "../components/Aside";
 import CardJob from "../components/CardJob";
+
 const LowonganKerja = () => {
   return (
     <>

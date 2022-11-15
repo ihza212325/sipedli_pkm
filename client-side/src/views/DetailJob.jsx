@@ -14,7 +14,7 @@ const DetailJob = () => {
                 {/*  */}
                 <div className="w-9/12 flex flex-row flex-wrap h-44 gap-10 justify-start  ">
                   {/* card Job */}
-                  <div class=" w-11/12 bg-white ">
+                  <div className=" w-11/12 bg-white ">
                     {/* isi head 1 */}
                     <div className="flex flex-row border-b-2 pb-10">
                       <img
@@ -23,11 +23,11 @@ const DetailJob = () => {
                         className="w-20 h-20"
                       />
                       <div className="px-5">
-                        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                           Recruitment and People Development Officer
                         </h5>
                         <a href="test">
-                          <p class="mb-2 text-base tracking-tight text-gray-900 dark:text-white">
+                          <p className="mb-2 text-base tracking-tight text-gray-900 dark:text-white">
                             Nanovest
                           </p>
                         </a>
@@ -35,7 +35,7 @@ const DetailJob = () => {
                         <div className=" flex flex-col gap-1 pb-7">
                           <div className="flex flex-row space-x-3">
                             <svg
-                              class="w-5 h-5"
+                              className="w-5 h-5"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                               xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@ const DetailJob = () => {
                           </div>
                           <div className="flex flex-row space-x-3">
                             <svg
-                              class="w-5 h-5"
+                              className="w-5 h-5"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                               xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ const DetailJob = () => {
                           </div>
                           <div className="flex flex-row space-x-3">
                             <svg
-                              class="w-5 h-5"
+                              className="w-5 h-5"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                               xmlns="http://www.w3.org/2000/svg"
@@ -84,10 +84,10 @@ const DetailJob = () => {
                         <div className="flex flex-row justify-start">
                           <button
                             type="button"
-                            class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-3 py-1.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 flex flex-row gap-2 justify-center items-center"
+                            className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-3 py-1.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 flex flex-row gap-2 justify-center items-center"
                           >
                             <svg
-                              class="w-4 h-4"
+                              className="w-4 h-4"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                               xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +107,7 @@ const DetailJob = () => {
                           className="text-whitefont-medium rounded-full text-sm px-3 py-2 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 flex flex-row gap-2 justify-center items-center"
                         >
                           <svg
-                            class="w-4 h-4"
+                            className="w-4 h-4"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
@@ -221,7 +221,7 @@ const DetailJob = () => {
                     </div>
                     {/* tentang peruhsaan */}
                     <div>
-                      <div class="p-4 w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 ">
+                      <div className="p-4 w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 ">
                         <p className="font-bold py-4">Tentang Perusahaan</p>
                         {/* heading Card */}
                         <div className="flex flex-row">
