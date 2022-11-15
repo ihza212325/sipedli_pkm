@@ -1,9 +1,29 @@
 import Aside from "../components/Aside";
 import CardJob from "../components/CardJob";
+import { useState, useEffect } from "react";
 
 const LowonganKerja = () => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    console.log("ihza");
+    setLoading(true);
+    fetch("http://localhost:3000/Users")
+      .then((res) => {
+        if (!res.ok) throw new Error("Fetch Error");
+        return res.json();
+      })
+      .then((data) => setUsers(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
   return (
     <>
+      <pre>
+        {JSON.stringify(users)}
+        {JSON.stringify(error)}
+      </pre>
       <div className="relative">
         <div className="w-11/12 mx-auto px-4 sm:px-6 ">
           <div className="flex justify-between items-center border-gray-100 py-5 md:justify-start md:space-x-10 w-full">
