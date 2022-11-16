@@ -1,21 +1,28 @@
-const CardJob = () => {
+import { useNavigate } from "react-router";
+
+const CardJob = ({ job }) => {
+  const navigate = useNavigate();
+  const handleButtonDetail = () => {
+    console.log("ihza");
+    console.log(job.id);
+    return navigate("/lowongan/" + job.id);
+  };
   return (
     <>
-      <div className="p-4 w-96 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+      <div
+        onClick={handleButtonDetail}
+        className="p-4 w-96 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
+      >
         {/* heading Card */}
         <div className="flex flex-row">
-          <img
-            src="https://images.glints.com/unsafe/160x0/glints-dashboard.s3.amazonaws.com/company-logo/711e0870b1219671701ec303263e6b8f.png"
-            alt=""
-            className="w-12 h-12"
-          />
+          <img src={job.company.companyLogo} alt="" className="w-12 h-12" />
           <div>
             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Recruitment and People Development Officer
+              {job.title}
             </h5>
             <a href="test">
               <p className="mb-2 text-base tracking-tight text-gray-900 dark:text-white">
-                Nanovest
+                {job.company.name}
               </p>
             </a>
           </div>
@@ -43,7 +50,7 @@ const CardJob = () => {
                 clipRule="evenodd"
               ></path>
             </svg>
-            <p>Setiabudi, Jakarta</p>
+            <p>{job.company.location}</p>
           </div>
           <div className="flex flex-row space-x-3">
             <svg
@@ -96,7 +103,7 @@ const CardJob = () => {
                 clipRule="evenodd"
               ></path>
             </svg>
-            <p className="text-xs">Actively Hiring</p>
+            <p className="text-xs">{job.jobType}</p>
           </button>
           <button
             type="button"

@@ -1,9 +1,43 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
 import Aside from "../components/Aside";
 // import CardJob from "../components/CardJob";
 import Footer from "../components/Footer";
+
 const DetailJob = () => {
+  // const [detail, setDetail] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { id } = useParams();
+  // console.log(id);
+  const dispatch = useDispatch();
+  const { job, company } = useSelector((state) => state);
+  useEffect(() => {
+    setLoading(true);
+    fetch(`http://localhost:3000/jobs/${id}?_expand=company&_expand=user`)
+      .then((res) => {
+        if (!res.ok) throw new Error("fetch error");
+        return res.json();
+      })
+      .then((data) => {
+        // console.log(data);
+        dispatch({
+          type: "detailJob/fetchsuccess",
+          payload: data,
+        });
+        // setDetail(data);
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return <h1>loading....</h1>;
+  }
   return (
     <>
+      {/* {JSON.stringify(company.name)} */}
       <div className="relative mb-52">
         <div className="w-11/12 mx-auto px-4 sm:px-6 ">
           <div className="flex justify-between items-center border-gray-100 py-5 md:justify-start md:space-x-10 w-full">
@@ -18,17 +52,17 @@ const DetailJob = () => {
                     {/* isi head 1 */}
                     <div className="flex flex-row border-b-2 pb-10">
                       <img
-                        src="https://images.glints.com/unsafe/160x0/glints-dashboard.s3.amazonaws.com/company-logo/711e0870b1219671701ec303263e6b8f.png"
+                        src={company.companyLogo}
                         alt=""
                         className="w-20 h-20"
                       />
                       <div className="px-5">
                         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                          Recruitment and People Development Officer
+                          {job.title}
                         </h5>
                         <a href="test">
                           <p className="mb-2 text-base tracking-tight text-gray-900 dark:text-white">
-                            Nanovest
+                            {company.name}
                           </p>
                         </a>
                         {/* body Card */}
@@ -46,7 +80,7 @@ const DetailJob = () => {
                                 clip-rule="evenodd"
                               ></path>
                             </svg>
-                            <p>Setiabudi, Jakarta</p>
+                            <p>{company.location}</p>
                           </div>
                           <div className="flex flex-row space-x-3">
                             <svg
@@ -99,7 +133,7 @@ const DetailJob = () => {
                                 clip-rule="evenodd"
                               ></path>
                             </svg>
-                            <p className="text-xs">Actively Hiring</p>
+                            <p className="text-xs">{job.jobType}</p>
                           </button>
                         </div>
                         <button
@@ -226,13 +260,13 @@ const DetailJob = () => {
                         {/* heading Card */}
                         <div className="flex flex-row">
                           <img
-                            src="https://images.glints.com/unsafe/160x0/glints-dashboard.s3.amazonaws.com/company-logo/711e0870b1219671701ec303263e6b8f.png"
+                            src={company.companyLogo}
                             alt=""
                             className="w-20 h-20"
                           />
                           <div>
                             <p class="mb-2 text-base tracking-tight text-gray-900 dark:text-white">
-                              Nanovest
+                              {company.name}
                             </p>
                             <p class="mb-2 text-base tracking-tight text-gray-900 dark:text-white">
                               Financial Services 51 - 200 karyawan

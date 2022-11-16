@@ -1,6 +1,9 @@
-const Login = () => {
+import NavBar from "../components/Navbar";
+
+const SignUp = () => {
   return (
     <>
+      <NavBar />
       <div className="flex flex-col justify-center items-center h-screen gap-20">
         <p className="font-bold text-3xl">
           Mari bergabung <br /> dengan Glints
@@ -108,4 +111,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

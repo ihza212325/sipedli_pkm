@@ -1,8 +1,10 @@
 import CardMenu from "../components/CardMenu";
 import Footer from "../components/Footer";
+import NavBar from "../components/Navbar";
 const Home = () => {
   return (
     <>
+      <NavBar />
       {/* kuning atas */}
       <div className="relative bg-yellow-1000">
         <div className="w-11/12 mx-auto px-4 sm:px-6 ">

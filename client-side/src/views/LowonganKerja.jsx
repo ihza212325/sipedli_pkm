@@ -1,29 +1,27 @@
 import Aside from "../components/Aside";
 import CardJob from "../components/CardJob";
 import { useState, useEffect } from "react";
-
+import { Navigate, useNavigate, Link, Outlet } from "react-router-dom";
+import NavBar from "../components/Navbar";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchJob } from "../store/action";
 const LowonganKerja = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { jobs, loading, error } = useSelector((state) => state.jobs);
   useEffect(() => {
-    console.log("ihza");
-    setLoading(true);
-    fetch("http://localhost:3000/Users")
-      .then((res) => {
-        if (!res.ok) throw new Error("Fetch Error");
-        return res.json();
-      })
-      .then((data) => setUsers(data))
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+    // setLoading(true);
+    dispatch(fetchJob());
   }, []);
+
+  if (loading) {
+    return <h1>loading....</h1>;
+  }
+
   return (
     <>
-      <pre>
-        {JSON.stringify(users)}
-        {JSON.stringify(error)}
-      </pre>
       <div className="relative">
         <div className="w-11/12 mx-auto px-4 sm:px-6 ">
           <div className="flex justify-between items-center border-gray-100 py-5 md:justify-start md:space-x-10 w-full">
@@ -59,10 +57,9 @@ const LowonganKerja = () => {
                 <Aside />
                 <div className="w-9/12 flex flex-row flex-wrap h-44 gap-10 justify-end">
                   {/* card Job */}
-                  <CardJob />
-                  <CardJob />
-                  <CardJob />
-                  <CardJob />
+                  {jobs.map((job) => {
+                    return <CardJob key={job.id} job={job} />;
+                  })}
                 </div>
               </div>
             </div>
