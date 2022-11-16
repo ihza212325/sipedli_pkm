@@ -5,14 +5,25 @@ import Home from "../views/Home";
 import LowonganKerja from "../views/LowonganKerja";
 // import Login from "../views/Login";
 // import "./index.css";
+import DetailJob from "../views/DetailJob";
+import MenuLowongan from "../views/MenuLowongan";
+import SignUp from "../views/SignUp";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
   },
   {
+    path: "/signup",
+    element: <SignUp />,
+  },
+  {
     path: "/lowongan",
-    element: <LowonganKerja />,
+    element: <MenuLowongan />,
+    children: [
+      { path: "", element: <LowonganKerja /> },
+      { path: ":id", element: <DetailJob /> },
+    ],
   },
 ]);
 
