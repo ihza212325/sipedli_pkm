@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const Sidebar = () => {
   return (
     <section id="sidebar" class="flex sticky bg-white top-20 w-fit h-fit">
@@ -8,8 +9,8 @@ const Sidebar = () => {
           </h1>
           <ul class="space-y-2">
             <li>
-              <a
-                href="test"
+              <Link
+                to="/home"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -27,11 +28,11 @@ const Sidebar = () => {
                   ></path>
                 </svg>
                 <span class="ml-3">Dashboard</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="test"
+              <Link
+                to="/home/jobs"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -48,11 +49,11 @@ const Sidebar = () => {
                   <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path>
                 </svg>
                 <span class="flex-1 ml-3 whitespace-nowrap">Jobs</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="test"
+              <Link
+                to="/home/company"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -70,7 +71,7 @@ const Sidebar = () => {
                   ></path>
                 </svg>
                 <span class="flex-1 ml-3 whitespace-nowrap">Company</span>
-              </a>
+              </Link>
             </li>
             <li>
               <a

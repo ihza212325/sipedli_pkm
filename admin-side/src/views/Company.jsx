@@ -1,6 +1,20 @@
+// import { TableRowJobs } from "../components/TableRowJobs";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import TableRowCompany from "../components/TableRowCompany";
+import { fetchCompany } from "../store/action";
 const Company = () => {
+  const dispatch = useDispatch();
+  const { companies, error, loading } = useSelector((state) => state.company);
+  useEffect(() => {
+    dispatch(fetchCompany());
+  }, []);
+  if (loading) {
+    return <h1>loading...</h1>;
+  }
   return (
     <>
+      {/* {JSON.stringify(companies)} */}
       <section id="movies" class="flex flex-col w-11/12">
         <h1 class="font-bold leading-tight text-3xl mt-0 mb-2 text-red-netflix p-8">
           Company
@@ -71,6 +85,12 @@ const Company = () => {
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             {/* <TableMovie /> */}
+            {/* <TableRowJobs /> */}
+            {companies.map((company) => {
+              console.log("satu");
+              return <TableRowCompany key={company.id} company={company} />;
+            })}
+            {/* <TableRowCompany />; */}
           </tbody>
         </table>
       </section>
