@@ -1,3 +1,5 @@
+// import { TableRowJobs } from "../components/TableRowJobs";
+
 const Company = () => {
   return (
     <>
@@ -71,6 +73,7 @@ const Company = () => {
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             {/* <TableMovie /> */}
+            {/* <TableRowJobs /> */}
           </tbody>
         </table>
       </section>

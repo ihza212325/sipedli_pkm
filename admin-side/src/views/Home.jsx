@@ -1,9 +1,6 @@
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
-// import Dashboard from "./Dashboard";
-// import Form from "../components/Form";
-// import Company from "./Company";
-import Job from "./Jobs";
+import { Outlet } from "react-router-dom";
 const Home = () => {
   return (
     <div id="home">
@@ -11,10 +8,7 @@ const Home = () => {
       <div id="bodyHome" class="flex flex-row bg-white dark:bg-black">
         <div class="flex flex-row w-full">
           <Sidebar />
-          {/* <Dashboard /> */}
-          <Job />
-          {/* <Form /> */}
-          {/* <Company /> */}
+          <Outlet />
         </div>
       </div>
     </div>

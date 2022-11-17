@@ -1,6 +1,20 @@
+import { useEffect } from "react";
+import { TableRowJobs } from "../components/TableRowJobs";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchJob } from "../store/action";
+
 const Job = () => {
+  const { jobs, loading, error } = useSelector((state) => state.jobs);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchJob());
+  }, []);
+  if (loading) {
+    return <h1>loading....</h1>;
+  }
   return (
     <>
+      {/* {JSON.stringify(jobs)} */}
       <section id="movies" class="flex flex-col w-11/12">
         <h1 class="font-bold leading-tight text-3xl mt-0 mb-2 text-red-netflix p-8">
           Job
@@ -70,6 +84,9 @@ const Job = () => {
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             {/* <TableMovie /> */}
+            {jobs.map((job) => {
+              return <TableRowJobs key={job.id} job={job} />;
+            })}
           </tbody>
         </table>
       </section>
