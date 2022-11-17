@@ -1,12 +1,33 @@
-import { ERROR_MESSAGE } from "../actionType";
+import { COMPANY_FETCH, ERROR_MESSAGE, LOADING } from "../actionType";
 
-const initialState = {};
+const initialState = {
+  error: null,
+  loading: false,
+  companies: [],
+};
 function companyReducer(state = initialState, action) {
   switch (action.type) {
     case ERROR_MESSAGE:
-      break;
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case LOADING: {
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    }
+    case COMPANY_FETCH: {
+      return {
+        ...state,
+        companies: action.payload,
+      };
+    }
 
     default:
-      break;
+      return state;
   }
 }
+
+export default companyReducer;
