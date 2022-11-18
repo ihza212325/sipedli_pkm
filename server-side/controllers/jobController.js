@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
 const { Company, Job, Skill, User } = require("../models/index");
-
+const { sequelize } = require("../models");
 class JobController {
   static async readJobs(req, res, next) {
     console.log("ihza");
@@ -40,7 +40,6 @@ class JobController {
       if (req.user.role === "admin") {
         option.include = [
           { model: Company },
-
           {
             model: User,
             attributes: { exclude: ["password"] },
@@ -66,47 +65,45 @@ class JobController {
   }
 
   static async createJobs(req, res, next) {
+    const t = await sequelize.transaction();
     try {
-      const { title, description, jobType, companyId } = req.body;
-      // console.log(req.user.id);
+      const { title, description, jobType, companyId, skill, level } = req.body;
       const authorId = req.user.id;
       // console.log(req.user);
       const status = "active";
-      const create = await Job.create({
-        title,
-        description,
-        jobType,
-        companyId,
-        authorId,
+      const create = await Job.create(
+        {
+          title,
+          description,
+          jobType,
+          companyId,
+          authorId,
+        },
+        { transaction: t }
+      );
+      console.log(create.id);
+      let newArr = [];
+      skill.forEach((e, index) => {
+        let obj = {
+          name: e,
+          level: level[index],
+          jobId: create.id,
+        };
+        newArr.push(obj);
       });
-      //   console.log(create);
-      if (create) {
-        const description = `Movie ${title} with id ${create.id} has been created`;
-        const updatedBy = req.user.email;
-        // const createHistory = await History.create({
-        //   title,
-        //   description,
-        //   updatedBy,
-        // });
-      }
+      console.log(newArr);
+
+      await Skill.bulkCreate(newArr, { transaction: t });
+
+      await t.commit();
       res.status(201).json({
         msg: "Succes Create Movie",
         msg2: "activity added to history",
         create,
       });
     } catch (error) {
+      await t.rollback();
       next(error);
-      // if (
-      //     error.name === 'SequelizeValidationError' ||
-      //     error.name === 'SequelizeUniqueConstraintError'
-      //     ) {
-      //         error=error.errors.map(el=>{
-      //         return el.message
-      //     })
-      //     res.status(400).json({msg:"Validasi Error",error})
-      // }else{
-      //     res.status(500).json({msg:"internal Server Error"})
-      // }
     }
   }
 

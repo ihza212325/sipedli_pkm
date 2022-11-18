@@ -25,18 +25,6 @@ class UserController {
       res.status(201).json({ msg: "user has been created", obj });
     } catch (error) {
       next(error);
-      // console.log(error.name);
-      //  if (error.name==="SequelizeValidationError"||
-      //     error.name==="SequelizeUniqueConstraintError"
-      //     ) {
-      //     error=error.errors.map(e=>{
-      //         return e.message
-      //     })
-      //     res.status(400).json({msg:"error validation",error})
-      // }else{
-      //     res.status(500).json({msg:"internal server error"})
-
-      // }
     }
   }
   static async login(req, res, next) {
@@ -67,13 +55,6 @@ class UserController {
       });
     } catch (error) {
       next(error);
-      // console.log(error.name);
-      // if (error.name==="invalid_credentials") {
-      //     res.status(401).json({msg:"Invalid Email or Password"})
-      // }else{
-      //     res.status(500).json({msg:"internal server error"})
-
-      // }
     }
   }
 

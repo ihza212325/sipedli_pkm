@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 var cors = require("cors");
 // console.log(process.env.SECRET)
 app.use(cors());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // console.log("ihza");
