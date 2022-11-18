@@ -21,13 +21,13 @@ export const TableRowJobs = ({ key, job }) => {
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
           <div class="text-sm font-medium text-gray-900">
-            {job.user.username}
+            {job.User.username}
           </div>
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
           <div class="flex items-center">
             <div class="text-sm font-medium text-gray-900">
-              {job.company.name}
+              {job.Company.name}
             </div>
           </div>
         </td>

@@ -1,3 +1,5 @@
+// import { useNavigate } from "react-router-dom";
+
 import {
   COMPANY_FETCH,
   ERROR_MESSAGE,
@@ -6,12 +8,20 @@ import {
   LOADING,
   LOADING_FALSE,
   LOADING_TRUE,
+  LOGIN,
 } from "./actionType";
+const BASE_URL = "http://localhost:3000";
 
 export const fetchJob = () => {
   return (dispatch) => {
     dispatch({ type: LOADING_TRUE });
-    fetch("http://localhost:3000/jobs?_expand=company&_expand=user")
+    fetch(BASE_URL + "/jobs", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token"),
+      },
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error("fetch error");
@@ -19,6 +29,7 @@ export const fetchJob = () => {
         return res.json();
       })
       .then((data) => {
+        // console.log(data);
         dispatch({
           type: JOB_FETCH,
           payload: data,
@@ -37,7 +48,13 @@ export const fetchJob = () => {
 export const fetchCompany = () => {
   return (dispatch) => {
     dispatch({ type: LOADING, payload: true });
-    fetch("http://localhost:3000/companies")
+    fetch(BASE_URL + "/company", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token"),
+      },
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error("fetch gagal");
@@ -62,5 +79,45 @@ export const fetchCompany = () => {
           payload: false,
         });
       });
+  };
+};
+
+export const loginAdmin = (data) => {
+  const { email, password } = data;
+
+  return (dispatch) => {
+    dispatch({ type: LOADING, payload: true });
+    return fetch(BASE_URL + "/users/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email, password: password }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("gagal post login");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        // console.log("berhasil");
+        // console.log(data);
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("username", data.username);
+        dispatch({
+          type: LOGIN,
+          payload: true,
+        });
+        // navigate("/home");
+      })
+      .catch((err) => console.log(err))
+      .finally(() =>
+        dispatch({
+          type: LOADING,
+          payload: false,
+        })
+      );
   };
 };

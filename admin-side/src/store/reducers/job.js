@@ -35,10 +35,14 @@ function jobReducer(state = initialState, action) {
         loading: true,
       };
     case JOB_FETCH:
-      console.log("lontongsss");
+      // console.log("lontongssass");
+      console.log(action.payload.rows);
       return {
         ...state,
-        jobs: action.payload,
+        jobs: action.payload.rows,
+
+        // companies: action.payload.rows.company,
+        // user: action.payload.rows.user,
       };
     case JOB_DETAIL:
       return {

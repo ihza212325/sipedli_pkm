@@ -1,4 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
+  const navigate = useNavigate();
+  const HandleLogOut = () => {
+    localStorage.clear();
+    navigate("/");
+  };
   return (
     <>
       <nav
@@ -38,8 +45,8 @@ const Navbar = () => {
             </a>
           </li>
           <li>
-            <a
-              href="test"
+            <button
+              onClick={HandleLogOut}
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <svg
@@ -56,7 +63,7 @@ const Navbar = () => {
                 ></path>
               </svg>
               <span class="flex-1 ml-3 whitespace-nowrap">LogOut</span>
-            </a>
+            </button>
           </li>
         </ul>
       </nav>
