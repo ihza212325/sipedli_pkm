@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { TableRowJobs } from "../components/TableRowJobs";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchJob } from "../store/action";
+import Form from "../components/Form";
 
 const Job = () => {
   const { jobs, loading, error } = useSelector((state) => state.jobs);
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchJob());
@@ -20,7 +22,10 @@ const Job = () => {
           Job
         </h1>
 
-        <button className="w-40 rounded-lg px-4 py-2 border-2 border-gray-900 text-gray-900 p-8 hover:bg-gray-900 hover:text-gray-100 duration-300 flex flex-row gap-2 m-8 place-self-end">
+        <button
+          onClick={() => setShowModal(true)}
+          className="w-40 rounded-lg px-4 py-2 border-2 border-gray-900 text-gray-900 p-8 hover:bg-gray-900 hover:text-gray-100 duration-300 flex flex-row gap-2 m-8 place-self-end"
+        >
           <svg
             class="w-6 h-6"
             fill="none"
@@ -90,6 +95,11 @@ const Job = () => {
           </tbody>
         </table>
       </section>
+      {showModal ? (
+        <>
+          <Form setShowModal={setShowModal} formType={"Form Add"} />
+        </>
+      ) : null}
     </>
   );
 };

@@ -121,3 +121,69 @@ export const loginAdmin = (data) => {
       );
   };
 };
+
+export const RegisterAdmin = (data) => {
+  const { username, email, password, phoneNumber, address } = data;
+
+  return (dispatch) => {
+    dispatch({ type: LOADING, payload: true });
+    return fetch(BASE_URL + "/users/register", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token"),
+      },
+      body: JSON.stringify({ username, email, password, phoneNumber, address }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("gagal post register");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        // console.log("berhasil");
+        // console.log(data);
+        // dispatch({
+        //   type: LOGIN,
+        //   payload: true,
+        // });
+        // navigate("/home");
+        console.log(data);
+      })
+      .catch((err) => console.log(err))
+      .finally(() =>
+        dispatch({
+          type: LOADING,
+          payload: false,
+        })
+      );
+  };
+};
+
+export const AddJob = (formAdd, FormSkill) => {
+  console.log(formAdd);
+  console.log(FormSkill);
+  return (dispatch) => {
+    fetch(BASE_URL + "/jobs", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token"),
+      },
+      body: JSON.stringify({ formAdd, FormSkill }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("post job error");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  };
+};

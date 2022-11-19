@@ -34,35 +34,9 @@ export const TableRowJobs = ({ key, job }) => {
         <td class="px-6 py-4 whitespace-nowrap">
           <div class="flex items-center">
             <div class="text-sm font-medium text-gray-900">
-              {/* {{ movie.Genre.name }}sad */}dsa
+              <li>javaScript</li>
+              <li>php</li>
             </div>
-          </div>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap">
-          <div class="flex items-center">
-            <div class="text-sm font-medium text-gray-900">
-              {/* {{ movie.User.email }} */}dsadsa
-            </div>
-          </div>
-        </td>
-        <td class="whitespace-nowrap">
-          <div class="flex items-center">
-            <select
-              id="countries"
-              v-if="authorization === 'admin'"
-              v-model="valuestatus"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option selected hidden>
-                {/* {{ movie.status }} */}dsa
-              </option>
-              <option value="Active">Active</option>
-              <option value="Archived">Archived</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-            <p class="text-center" v-if="authorization !== 'admin'">
-              {/* {{ movie.status }} */}dasdsa
-            </p>
           </div>
         </td>
         <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">

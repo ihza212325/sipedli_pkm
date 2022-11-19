@@ -40,7 +40,9 @@ const Navbar = () => {
                 ></path>
               </svg>
               <span class="flex-1 ml-3 whitespace-nowrap">
-                <span class="text-green-600 font-bold">Hai,</span>
+                <span class="text-green-600 font-bold">
+                  Hai,{localStorage.getItem("username")}
+                </span>
               </span>
             </a>
           </li>
