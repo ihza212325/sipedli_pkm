@@ -4,32 +4,19 @@ import { useParams } from "react-router";
 import Aside from "../components/Aside";
 // import CardJob from "../components/CardJob";
 import Footer from "../components/Footer";
+import { fetchDetailJob } from "../store/action";
 
 const DetailJob = () => {
   // const [detail, setDetail] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
   const { id } = useParams();
   // console.log(id);
+  // const
   const dispatch = useDispatch();
-  const { job, company } = useSelector((state) => state);
+  const { job, company, skills, loading } = useSelector((state) => state.jobs);
   useEffect(() => {
-    setLoading(true);
-    fetch(`http://localhost:3000/jobs/${id}?_expand=company&_expand=user`)
-      .then((res) => {
-        if (!res.ok) throw new Error("fetch error");
-        return res.json();
-      })
-      .then((data) => {
-        // console.log(data);
-        dispatch({
-          type: "detailJob/fetchsuccess",
-          payload: data,
-        });
-        // setDetail(data);
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+    dispatch(fetchDetailJob(id));
   }, []);
 
   if (loading) {
@@ -37,7 +24,7 @@ const DetailJob = () => {
   }
   return (
     <>
-      {/* {JSON.stringify(company.name)} */}
+      {/* {JSON.stringify(job)} */}
       <div className="relative mb-52">
         <div className="w-11/12 mx-auto px-4 sm:px-6 ">
           <div className="flex justify-between items-center border-gray-100 py-5 md:justify-start md:space-x-10 w-full">
@@ -198,45 +185,31 @@ const DetailJob = () => {
                     <div className=" border-b-2 pb-4">
                       <p className="py-5 font-bold text-lg">Skills Wajib</p>
                       <div>
-                        <button
-                          type="button"
-                          class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                        >
-                          End To End Recruitment
-                        </button>
-                        <button
-                          type="button"
-                          class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                        >
-                          Human Resources (HR)
-                        </button>
+                        {skills.map((e) => {
+                          return (
+                            <button
+                              type="button"
+                              class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                            >
+                              {e.name}-{e.level}
+                            </button>
+                          );
+                        })}
                       </div>
                     </div>
                     {/* head 2 */}
                     <div className="mb-14">
                       <p className="py-5 font-bold text-lg">
-                        Deskripsi pekerjaan Recruitment and People Development
-                        Officer Nanovest
+                        Deskripsi pekerjaan {company.name}
                       </p>
                       <div>
-                        <p>Job description </p>
+                        <p className="font-semibold">Job description </p>
                         <ul className="list-disc">
-                          <li>
-                            Handle end to end recruitment process from candidate
-                            source until onboarding process.
-                          </li>
-                          <li>
-                            Coordinate pre-employment test schedules and conduct
-                            applicant preliminary interviews.
-                          </li>
-                          <li>
-                            Coordinate pre-employment test schedules and conduct
-                            applicant preliminary interviews.
-                          </li>
+                          <li>{job.description}</li>
                         </ul>
                       </div>
                       <div>
-                        <p>Job Requirement </p>
+                        <p className="font-semibold">Job Requirement </p>
                         <ul className="list-disc">
                           <li>
                             Handle end to end recruitment process from candidate
@@ -258,7 +231,7 @@ const DetailJob = () => {
                       <div className="p-4 w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 ">
                         <p className="font-bold py-4">Tentang Perusahaan</p>
                         {/* heading Card */}
-                        <div className="flex flex-row">
+                        <div className="flex flex-row space-x-10">
                           <img
                             src={company.companyLogo}
                             alt=""
@@ -269,7 +242,7 @@ const DetailJob = () => {
                               {company.name}
                             </p>
                             <p class="mb-2 text-base tracking-tight text-gray-900 dark:text-white">
-                              Financial Services 51 - 200 karyawan
+                              {company.email}
                             </p>
                             <img
                               src="https://www.pngitem.com/pimgs/m/21-210106_100-linkedin-logo-latest-logo-icon-gif-linkedin.png"
@@ -282,10 +255,7 @@ const DetailJob = () => {
                         <div className=" flex flex-col gap-5 mt-10 pb-7">
                           <div>
                             <p className="font-bold">Vision :</p>
-                            <p>
-                              Trustworthy investment platform accessible by all
-                              levels of society
-                            </p>
+                            <p>{company.description}</p>
                           </div>
                           <div>
                             <p className="font-bold">Mission :</p>
@@ -298,10 +268,7 @@ const DetailJob = () => {
                           </div>
                           <div>
                             <p className="font-bold">Alamat Kantor :</p>
-                            <p>
-                              Jl. Jendral Sudirman Kav. 21, South Jakarta,
-                              Indonesia
-                            </p>
+                            <p>{company.location}</p>
                           </div>
                         </div>
                       </div>

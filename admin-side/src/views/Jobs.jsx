@@ -1,26 +1,33 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { TableRowJobs } from "../components/TableRowJobs";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchJob } from "../store/action";
+import Form from "../components/Form";
 
 const Job = () => {
-  const { jobs, loading, error } = useSelector((state) => state.jobs);
+  const { jobs, loading } = useSelector((state) => state.jobs);
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchJob());
+    // dispatch(fetchSkill());
   }, []);
+
   if (loading) {
     return <h1>loading....</h1>;
   }
   return (
     <>
-      {/* {JSON.stringify(jobs)} */}
+      {/* {JSON.stringify(skills)} */}
       <section id="movies" class="flex flex-col w-11/12">
         <h1 class="font-bold leading-tight text-3xl mt-0 mb-2 text-red-netflix p-8">
           Job
         </h1>
 
-        <button className="w-40 rounded-lg px-4 py-2 border-2 border-gray-900 text-gray-900 p-8 hover:bg-gray-900 hover:text-gray-100 duration-300 flex flex-row gap-2 m-8 place-self-end">
+        <button
+          onClick={() => setShowModal(true)}
+          className="w-40 rounded-lg px-4 py-2 border-2 border-gray-900 text-gray-900 p-8 hover:bg-gray-900 hover:text-gray-100 duration-300 flex flex-row gap-2 m-8 place-self-end"
+        >
           <svg
             class="w-6 h-6"
             fill="none"
@@ -84,12 +91,24 @@ const Job = () => {
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             {/* <TableMovie /> */}
-            {jobs.map((job) => {
-              return <TableRowJobs key={job.id} job={job} />;
+            {jobs.map((job, index) => {
+              return (
+                <TableRowJobs
+                  key={job.id}
+                  index={index}
+                  job={job}
+                  skill={job.Skills}
+                />
+              );
             })}
           </tbody>
         </table>
       </section>
+      {showModal ? (
+        <>
+          <Form setShowModal={setShowModal} formType={"Form Add"} />
+        </>
+      ) : null}
     </>
   );
 };

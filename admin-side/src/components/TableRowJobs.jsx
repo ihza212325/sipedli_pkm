@@ -1,10 +1,27 @@
-export const TableRowJobs = ({ key, job }) => {
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { DeleteJob, Swalert } from "../store/action";
+import Form from "./Form";
+export const TableRowJobs = ({ index, job, skill }) => {
+  // const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  const handleDelete = (e) => {
+    e.preventDefault();
+    // console.log(job.id);
+    dispatch(DeleteJob(job.id)).then(() => {
+      dispatch(Swalert("success", "Berhassil Delete"));
+    });
+  };
+
   return (
     <>
+      {/* {JSON.stringify(skill)} */}
       <tr class="transition-all hover:bg-gray-100 hover:shadow-lg">
         <td class="px-6 py-4 whitespace-nowrap">
           <div class="flex items-center">
-            <div class="text-sm font-medium text-gray-900">{job.id}</div>
+            <div class="text-sm font-medium text-gray-900">{index + 1}</div>
           </div>
         </td>
         <td class="px-6 py-4 whitespace-wrap">
@@ -21,54 +38,30 @@ export const TableRowJobs = ({ key, job }) => {
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
           <div class="text-sm font-medium text-gray-900">
-            {job.user.username}
+            {job.User.username}
           </div>
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
           <div class="flex items-center">
             <div class="text-sm font-medium text-gray-900">
-              {job.company.name}
+              {job.Company.name}
             </div>
           </div>
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
           <div class="flex items-center">
-            <div class="text-sm font-medium text-gray-900">
-              {/* {{ movie.Genre.name }}sad */}dsa
+            <div class="text-sm font-medium text-gray-900">{/*  */}</div>
+            <div className="flex flex-col">
+              {skill.map((e) => {
+                return <li>{e.name}</li>;
+              })}
             </div>
+            {/* <h1>lond</h1> */}
           </div>
         </td>
-        <td class="px-6 py-4 whitespace-nowrap">
-          <div class="flex items-center">
-            <div class="text-sm font-medium text-gray-900">
-              {/* {{ movie.User.email }} */}dsadsa
-            </div>
-          </div>
-        </td>
-        <td class="whitespace-nowrap">
-          <div class="flex items-center">
-            <select
-              id="countries"
-              v-if="authorization === 'admin'"
-              v-model="valuestatus"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option selected hidden>
-                {/* {{ movie.status }} */}dsa
-              </option>
-              <option value="Active">Active</option>
-              <option value="Archived">Archived</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-            <p class="text-center" v-if="authorization !== 'admin'">
-              {/* {{ movie.status }} */}dasdsa
-            </p>
-          </div>
-        </td>
-        <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-          <a
-            href="#"
-            v-if="+authorizationEdit === movie.User.id || authorization === 'admin'"
+        <td class="px-6 space-x-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+          <button
+            onClick={() => setShowModal(true)}
             class="text-indigo-600 hover:text-indigo-900"
           >
             <svg
@@ -85,9 +78,33 @@ export const TableRowJobs = ({ key, job }) => {
                 d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
               ></path>
             </svg>
-          </a>
+          </button>
+          <button
+            onClick={handleDelete}
+            class="text-red-600  hover:text-indigo-900"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+              />
+            </svg>
+          </button>
         </td>
       </tr>
+      {showModal ? (
+        <>
+          <Form setShowModal={setShowModal} formType={"Form Edit"} job={job} />
+        </>
+      ) : null}
     </>
   );
 };

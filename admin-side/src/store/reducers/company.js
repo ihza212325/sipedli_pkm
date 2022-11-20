@@ -6,6 +6,7 @@ const initialState = {
   companies: [],
 };
 function companyReducer(state = initialState, action) {
+  // console.log(action.payload);
   switch (action.type) {
     case ERROR_MESSAGE:
       return {

@@ -1,4 +1,16 @@
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Swalert } from "../store/action";
+// import Swal from "sweetalert2";
 const Navbar = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const HandleLogOut = () => {
+    localStorage.clear();
+    // Swal.fire("Any fool can use a computer");
+    navigate("/");
+    dispatch(Swalert("error", "Berhasil Logout"));
+  };
   return (
     <>
       <nav
@@ -33,13 +45,15 @@ const Navbar = () => {
                 ></path>
               </svg>
               <span class="flex-1 ml-3 whitespace-nowrap">
-                <span class="text-green-600 font-bold">Hai,</span>
+                <span class="text-green-600 font-bold">
+                  Hai,{localStorage.getItem("username")}
+                </span>
               </span>
             </a>
           </li>
           <li>
-            <a
-              href="test"
+            <button
+              onClick={HandleLogOut}
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <svg
@@ -56,7 +70,7 @@ const Navbar = () => {
                 ></path>
               </svg>
               <span class="flex-1 ml-3 whitespace-nowrap">LogOut</span>
-            </a>
+            </button>
           </li>
         </ul>
       </nav>

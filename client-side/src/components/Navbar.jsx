@@ -133,7 +133,7 @@ const NavBar = () => {
                     </div>
                     <button
                       type="submit"
-                      className="text-white bg-red-1000 border border-red-1000 focus:outline-none hover:bg-red-700  font-medium text-sm px-5 py-2.5 mr-2 mb-2  flex flex-row gap-2 justify-center items-center w-full h-10 shadow-5xl hover:shadow-none ease-linear duration-100 "
+                      className="text-white bg-red-1000 border border-red-1000 focus:outline-none  font-medium text-sm px-5 py-2.5 mr-2 mb-2  flex flex-row gap-2 justify-center items-center w-full h-10 shadow-5xl hover:translate-x-1 hover:translate-y-1 hover:shadow-none ease-linear duration-100 "
                     >
                       MASUK
                     </button>

@@ -5,13 +5,13 @@ const SignUp = () => {
     <>
       <NavBar />
       <div className="flex flex-col justify-center items-center h-screen gap-20">
-        <p className="font-bold text-3xl">
+        <p className="font-bold text-3xl text-center">
           Mari bergabung <br /> dengan Glints
         </p>
         <div className="flex flex-col gap-3 text-center">
           <button
             type="button"
-            className="text-white bg-red-1000 border border-red-1000 focus:outline-none hover:bg-red-700  font-medium text-sm px-5 py-2.5 mr-2 mb-2  flex flex-row gap-2 justify-center items-center w-72 h-14 shadow-4xl hover:shadow-none ease-linear duration-100"
+            className="text-white bg-red-1000 border border-red-1000 focus:outline-none  font-medium text-sm px-5 py-2.5 mr-2 mb-2  flex flex-row gap-2 justify-center items-center  w-72 h-14 shadow-5xl hover:translate-x-1 hover:translate-y-1 hover:shadow-none ease-linear duration-100"
           >
             <svg
               class="w-6 h-6"
