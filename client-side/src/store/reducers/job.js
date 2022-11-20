@@ -41,5 +41,5 @@ function jobReducer(state = initialState, action) {
       return state;
   }
 }
-// const jobStore = createStore(jobReducer);
+// const jobStore = createSt ore(jobReducer);
 export default jobReducer;

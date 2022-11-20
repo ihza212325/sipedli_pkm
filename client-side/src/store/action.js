@@ -1,5 +1,5 @@
 import { ERROR_MESSAGE, JOB_DETAIL, JOB_FETCH, LOADING } from "./actionType";
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://glitss-production.up.railway.app";
 
 export const fetchJob = () => {
   return (dispatch) => {
