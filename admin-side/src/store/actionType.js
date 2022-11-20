@@ -7,3 +7,5 @@ export const LOADING = "loading/setLoading";
 
 export const LOGIN = "login/loginform";
 export const COMPANY_FETCH = "company/fetchsuccess";
+
+export const SKILL_FETCH = "skill/fetchsuccess";

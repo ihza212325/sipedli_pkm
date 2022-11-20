@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Skill.belongsTo(models.Job, { foreignKey: "jobId" });
     }
   }
   Skill.init(

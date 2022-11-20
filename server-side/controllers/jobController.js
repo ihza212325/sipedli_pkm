@@ -18,7 +18,7 @@ class JobController {
       }
 
       // console.log(page);
-      const limit = 9;
+      const limit = 100;
       const offset = page * limit;
       let option = {
         limit: limit,
@@ -44,12 +44,13 @@ class JobController {
             model: User,
             attributes: { exclude: ["password"] },
           },
+          { model: Skill },
         ];
       }
 
-      console.log(option);
+      // console.log(option);
       const allJobs = await Job.findAndCountAll(option);
-      console.log(allJobs);
+      // console.log(allJobs);
       // console.log(allMovies.count);
       if (allJobs.rows.length === 0) {
         throw { name: "DATA_NOT_FOUNDS" };
@@ -57,6 +58,7 @@ class JobController {
       const totalPages = Math.ceil(allJobs.count / limit);
       allJobs.totalPage = totalPages;
       allJobs.currentPage = `${+page + 1}`;
+
       res.status(200).json(allJobs);
     } catch (error) {
       next(error);
@@ -67,38 +69,54 @@ class JobController {
   static async createJobs(req, res, next) {
     const t = await sequelize.transaction();
     try {
-      const { title, description, jobType, companyId, skill, level } = req.body;
+      // console.log(req.body);
+      const { title, description, jobType, company } = req.body.formAdd;
       const authorId = req.user.id;
+      const skill = req.body.FormSkill;
+      // console.log(req.body.formAdd);
+      // console.log(req.body.FormSkill);
+      // console.log(skill, { title, description, jobType, companyId });
       // console.log(req.user);
-      const status = "active";
+      // const status = "active";
+      // console.log("lontongyol");
+      // companyId = Number(companyId);
+      // const companyId = Number(company);
+      // console.log(companyId, "<<<<<<<<<<");
+      // console.log("lontonggg");
+      // console.log(req.body.formAdd);
       const create = await Job.create(
         {
           title,
           description,
           jobType,
-          companyId,
+          companyId: company,
           authorId,
         },
         { transaction: t }
       );
-      console.log(create.id);
-      let newArr = [];
-      skill.forEach((e, index) => {
-        let obj = {
-          name: e,
-          level: level[index],
-          jobId: create.id,
-        };
-        newArr.push(obj);
+      // console.log(create.id);
+      // console.log(skill);
+      skill.forEach((el) => {
+        el.jobId = create.id;
       });
-      console.log(newArr);
+      // console.log(skill);
+      // let newArr = [];
+      // skill.forEach((e, index) => {
+      //   let obj = {
+      //     name: e,
+      //     level: level[index],
+      //     jobId: create.id,
+      //   };
+      //   newArr.push(obj);
+      // });
+      // console.log(newArr);
 
-      await Skill.bulkCreate(newArr, { transaction: t });
+      await Skill.bulkCreate(skill, { transaction: t });
 
       await t.commit();
       res.status(201).json({
-        msg: "Succes Create Movie",
-        msg2: "activity added to history",
+        msg: "Succes Create Job",
+        msg2: "Succes Create Skill",
         create,
       });
     } catch (error) {
@@ -119,6 +137,7 @@ class JobController {
             model: User,
             attributes: { exclude: ["password"] },
           },
+          { model: Skill },
         ],
       };
       const jobById = await Job.findOne(option);
@@ -140,19 +159,25 @@ class JobController {
   }
 
   static async deleteId(req, res, next) {
+    const t = await sequelize.transaction();
+
     try {
       const { id } = req.params;
       let option = {
         where: { id: id },
       };
       // console.log("lontong");
-      const findMovie = await Movie.findOne(option);
-      const movieById = await Movie.destroy(option, { returning: true });
+      // const findMovie = await Movie.findOne(option);
+      await Skill.destroy({ where: { jobId: id } }, { transaction: t });
+      await Job.destroy(option, { transaction: t });
       // console.log(movieById);
-      if (!movieById) throw { name: "DATA_NOT_FOUND", id };
+      // if (!movieById) throw { name: "DATA_NOT_FOUND", id };
       // console.log(movieById);
-      res.status(200).json({ msg: `${findMovie.title} succes to delete` });
+      console.log("berhasil delete");
+      await t.commit();
+      res.status(200).json({ msg: `succes to delete` });
     } catch (error) {
+      await t.rollback();
       next(error);
       // if (error.name==='notFound') {
       //     error={}
@@ -163,41 +188,52 @@ class JobController {
     }
   }
 
-  static async updateMovieByid(req, res, next) {
+  static async updateJobByid(req, res, next) {
+    const t = await sequelize.transaction();
+
     try {
       //   console.log("ihza");
       //   console.log(req.params.id);
       const authorId = req.user.id;
-      const { title, synopsis, trailerUrl, imageUrl, rating, genreId } =
-        req.body;
+      const { title, description, jobType, company } = req.body.formEdit;
       //   console.log(req.user);
-      //   console.log(req.body);
-      const updateMovie = await Movie.update(
+      const skill = req.body.FormSkillEdit;
+      console.log(req.body);
+      const { id } = req.params;
+      // console.log(req.params);
+      console.log(skill);
+      console.log({ title, description, jobType, company });
+      // console.log("ihzaa");
+      const updateJob = await Job.update(
         {
           title,
-          synopsis,
-          trailerUrl,
-          imageUrl,
-          rating,
-          genreId,
+          description,
+          jobType,
+          companyId: company,
           authorId,
         },
-        { where: { id: req.params.id } }
+        { where: { id: req.params.id } },
+        { transaction: t }
       );
-      if (updateMovie) {
-        const description = `Movie with id ${req.params.id} Updated`;
-        const updatedBy = req.user.email;
-        const createHistory = await History.create({
-          title,
-          description,
-          updatedBy,
-        });
-      }
-      // console.log("INI IHZs");
+      // console.log(updateJob);
+      await Skill.destroy(
+        {
+          where: { jobId: id },
+        },
+        { transaction: t }
+      );
+      skill.forEach((el) => {
+        el.jobId = id;
+      });
+      await Skill.bulkCreate(skill, { transaction: t });
+
+      await t.commit();
+
       res
         .status(200)
         .json({ msg: "Update Success", msg2: "activity added to history" });
     } catch (error) {
+      await t.rollback();
       next(error);
     }
   }
@@ -274,6 +310,26 @@ class JobController {
       res.status(200).json(readFavorite);
     } catch (error) {
       next(error);
+    }
+  }
+
+  static async readSkill(req, res, next) {
+    try {
+      // console.log("ihza");
+      // const { jobId } = req.params;
+      // const readSkill = await Skill.findAll({ where: { jobId } });
+      const projects = await sequelize.query(
+        `SELECT j.id, s.name,s."level"  FROM  "Jobs" j INNER JOIN "Skills" s ON j.id=s."jobId"`,
+        {
+          model: Skill,
+          mapToModel: true, // pass true here if you have any mapped fields
+        }
+      );
+      console.log(projects);
+      // console.log(readSkill);
+      res.status(200).json(projects);
+    } catch (err) {
+      next(err);
     }
   }
 }

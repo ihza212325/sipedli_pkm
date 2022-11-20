@@ -13,13 +13,14 @@ class companyController {
     try {
       const { name, location, email, description, companyLogo } = req.body;
 
-      const addgenre = await Company.create({
+      await Company.create({
         name,
         location,
         email,
         description,
         companyLogo,
       });
+      console.log("berhasil");
       res.status(201).json("Berhasil Membuat Company");
     } catch (error) {
       next(error);
@@ -43,7 +44,8 @@ class companyController {
     try {
       const { id } = req.params;
       const { name, location, email, description, companyLogo } = req.body;
-      const foundGenre = await Company.update(
+      // console.log(req.body);
+      await Company.update(
         {
           name,
           location,
@@ -65,7 +67,8 @@ class companyController {
     try {
       //   console.log("ihza");
       const { id } = req.params;
-      const foundelete = await Company.destroy({ where: { id: id } });
+      await Company.destroy({ where: { id: id } });
+      // console.log("berhasil di delete");
       res.status(200).json({ msg: "Success Delete Genre" });
     } catch (error) {
       next(error);

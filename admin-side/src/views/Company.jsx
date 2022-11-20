@@ -1,6 +1,7 @@
 // import { TableRowJobs } from "../components/TableRowJobs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import FormCompany from "../components/FormCompany";
 import TableRowCompany from "../components/TableRowCompany";
 import { fetchCompany } from "../store/action";
 const Company = () => {
@@ -9,9 +10,11 @@ const Company = () => {
   useEffect(() => {
     dispatch(fetchCompany());
   }, []);
-  if (loading) {
-    return <h1>loading...</h1>;
-  }
+  // if (loading) {
+  //   return <h1>loading...</h1>;
+  // }
+  // FormCompany
+  const [showModal, setShowModal] = useState(false);
   return (
     <>
       {/* {JSON.stringify(companies)} */}
@@ -20,7 +23,10 @@ const Company = () => {
           Company
         </h1>
 
-        <button className="w-48 rounded-lg px-4 py-2 border-2 border-gray-900 text-gray-900 p-8 hover:bg-gray-900 hover:text-gray-100 duration-300 flex flex-row gap-2 m-8 place-self-end">
+        <button
+          onClick={() => setShowModal(true)}
+          className="w-48 rounded-lg px-4 py-2 border-2 border-gray-900 text-gray-900 p-8 hover:bg-gray-900 hover:text-gray-100 duration-300 flex flex-row gap-2 m-8 place-self-end"
+        >
           <svg
             class="w-6 h-6"
             fill="none"
@@ -94,6 +100,11 @@ const Company = () => {
           </tbody>
         </table>
       </section>
+      {showModal ? (
+        <>
+          <FormCompany formType={"Form Add"} setShowModal={setShowModal} />
+        </>
+      ) : null}
     </>
   );
 };

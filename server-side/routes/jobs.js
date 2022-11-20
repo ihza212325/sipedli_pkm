@@ -9,10 +9,12 @@ const router = express.Router();
 router.use(auth);
 router.get("/", JobController.readJobs);
 router.post("/", JobController.createJobs);
+router.get("/skill", JobController.readSkill);
 router.patch("/:id", authorizationMovie, JobController.patchStatus);
 router.get("/:id", JobController.readJobId);
-router.put("/:id", authorizationMovieEdit, JobController.updateMovieByid);
+router.put("/:id", JobController.updateJobByid);
+router.delete("/:id", JobController.deleteId);
+
 // router.use ( authorizationMovie )
-// router.delete("/:id", authorizationMovie, MovieController.deleteId);
 
 module.exports = router;

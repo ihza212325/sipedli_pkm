@@ -4,32 +4,35 @@ import { useParams } from "react-router";
 import Aside from "../components/Aside";
 // import CardJob from "../components/CardJob";
 import Footer from "../components/Footer";
+import { fetchJobDetail } from "../store/action";
 
 const DetailJob = () => {
   // const [detail, setDetail] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
   const { id } = useParams();
   // console.log(id);
+  // const
   const dispatch = useDispatch();
-  const { job, company } = useSelector((state) => state);
+  const { job, company, loading } = useSelector((state) => state.jobs);
   useEffect(() => {
-    setLoading(true);
-    fetch(`http://localhost:3000/jobs/${id}?_expand=company&_expand=user`)
-      .then((res) => {
-        if (!res.ok) throw new Error("fetch error");
-        return res.json();
-      })
-      .then((data) => {
-        // console.log(data);
-        dispatch({
-          type: "detailJob/fetchsuccess",
-          payload: data,
-        });
-        // setDetail(data);
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+    dispatch(fetchJobDetail(id));
+    // setLoading(true);
+    // fetch(`http://localhost:3000/jobs/${id}?_expand=company&_expand=user`)
+    //   .then((res) => {
+    //     if (!res.ok) throw new Error("fetch error");
+    //     return res.json();
+    //   })
+    //   .then((data) => {
+    //     // console.log(data);
+    //     dispatch({
+    //       type: "detailJob/fetchsuccess",
+    //       payload: data,
+    //     });
+    //     // setDetail(data);
+    //   })
+    //   .catch((err) => setError(err.message))
+    //   .finally(() => setLoading(false));
   }, []);
 
   if (loading) {

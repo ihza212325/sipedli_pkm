@@ -9,6 +9,7 @@ import {
   LOADING_FALSE,
   LOADING_TRUE,
   LOGIN,
+  SKILL_FETCH,
 } from "./actionType";
 const BASE_URL = "http://localhost:3000";
 
@@ -166,7 +167,8 @@ export const AddJob = (formAdd, FormSkill) => {
   console.log(formAdd);
   console.log(FormSkill);
   return (dispatch) => {
-    fetch(BASE_URL + "/jobs", {
+    dispatch({ type: LOADING_TRUE });
+    return fetch(BASE_URL + "/jobs", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -183,7 +185,196 @@ export const AddJob = (formAdd, FormSkill) => {
       })
       .then((data) => {
         console.log(data);
+        dispatch(fetchJob());
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => dispatch({ type: LOADING_FALSE }));
+  };
+};
+
+export const EditJobs = (formEdit, FormSkillEdit, id) => {
+  // console.log("momo");
+  return (dispatch) => {
+    dispatch({ type: LOADING_TRUE });
+    return fetch(BASE_URL + "/jobs/" + id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token"),
+      },
+      body: JSON.stringify({ formEdit, FormSkillEdit }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("fetch error");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        // console.log("<<<<<<<<<<<<");
+        // dispatch({
+        //   type: JOB_DETAIL,
+        //   payload: data,
+        // });
+        // fetchJob();
+        dispatch(fetchJob());
+      })
+      .catch((err) =>
+        dispatch({
+          type: ERROR_MESSAGE,
+          payload: err.message,
+        })
+      )
+      .finally(() => dispatch({ type: LOADING_FALSE }));
+  };
+};
+export const DeleteJob = (id) => {
+  // console.log("momo");
+  return (dispatch) => {
+    dispatch({ type: LOADING_TRUE });
+    return fetch(BASE_URL + "/jobs/" + id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token"),
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("fetch error");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        console.log("berhasil delete");
+        // fetchJob();
+        // console.log("<<<<<<<<<<<<");
+        // dispatch({
+        //   type: JOB_DETAIL,
+        //   payload: data,
+        // });
+        dispatch(fetchJob());
+      })
+      .catch((err) =>
+        dispatch({
+          type: ERROR_MESSAGE,
+          payload: err.message,
+        })
+      )
+      .finally(() => dispatch({ type: LOADING_FALSE }));
+  };
+};
+
+export const AddCompany = (data) => {
+  const { name, companyLogo, location, email, description } = data;
+
+  return (dispatch) => {
+    dispatch({ type: LOADING, payload: true });
+    return fetch(BASE_URL + "/company", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token"),
+      },
+      body: JSON.stringify({ name, companyLogo, location, email, description }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("gagal post register");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        // console.log("berhasil");
+        // console.log(data);
+        // dispatch({
+        //   type: LOGIN,
+        //   payload: true,
+        // });
+        // navigate("/home");
+        console.log(data);
+        dispatch(fetchCompany());
+      })
+      .catch((err) => console.log(err))
+      .finally(() =>
+        dispatch({
+          type: LOADING,
+          payload: false,
+        })
+      );
+  };
+};
+export const EditCompany = (data, id) => {
+  const { name, companyLogo, location, email, description } = data;
+
+  return (dispatch) => {
+    dispatch({ type: LOADING, payload: true });
+    return fetch(BASE_URL + "/company/" + id, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token"),
+      },
+      body: JSON.stringify({ name, companyLogo, location, email, description }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("gagal post register");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        dispatch(fetchCompany());
+      })
+      .catch((err) => console.log(err))
+      .finally(() =>
+        dispatch({
+          type: LOADING,
+          payload: false,
+        })
+      );
+  };
+};
+
+export const DeleteCompany = (id) => {
+  // console.log("momo");
+  return (dispatch) => {
+    dispatch({ type: LOADING_TRUE });
+    return fetch(BASE_URL + "/company/" + id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token"),
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("fetch error");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        console.log("berhasil delete");
+        // fetchJob();
+        // console.log("<<<<<<<<<<<<");
+        // dispatch({
+        //   type: JOB_DETAIL,
+        //   payload: data,
+        // });
+        dispatch(fetchCompany());
+      })
+      .catch((err) =>
+        dispatch({
+          type: ERROR_MESSAGE,
+          payload: err.message,
+        })
+      )
+      .finally(() => dispatch({ type: LOADING_FALSE }));
   };
 };

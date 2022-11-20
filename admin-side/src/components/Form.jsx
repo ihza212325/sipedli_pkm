@@ -1,25 +1,53 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AddJob, fetchCompany } from "../store/action";
+import { AddJob, EditJobs, fetchCompany, fetchJob } from "../store/action";
 // import { RegisterAdmin } from "../store/action";
 
-const Form = ({ setShowModal, formType }) => {
+const Form = ({ setShowModal, formType, job }) => {
   const [formAdd, setFormAdd] = useState({
     title: "",
     description: "",
     jobType: "",
     companyId: "",
-    author: "",
   });
+
+  const [formEdit, setFormEdit] = useState({
+    title: formType === "Form Edit" ? job.title : "",
+    description: formType === "Form Edit" ? job.description : "",
+    jobType: formType === "Form Edit" ? job.jobType : "",
+    companyId: formType === "Form Edit" ? job.companyId : "",
+  });
+
+  // let editInitialSkills = job.Skills
+
   const { companies, error, loading } = useSelector((state) => state.company);
   const [typeForm, setTypeForm] = useState(null);
-  const [addFormskill, setAddFormSkill] = useState(1);
+  // const [addFormskill, setAddFormSkill] = useState(1);
   let initialSkill = {
     name: "",
     level: "",
   };
+  // let initialSkillEdit;
+  // if (formType === "Form Edit") {
+  //   initialSkillEdit = {
+  //     name: job.Skills.name,
+  //     level: job.Skills.level,
+  //   };
+  // }
+
   const [FormSkill, setFormSkill] = useState([initialSkill]);
+  const [FormSkillEdit, setFormSkillEdit] = useState(
+    formType === "Form Edit"
+      ? job.Skills.map((e) => {
+          let obj = {
+            name: e.name,
+            level: e.level,
+          };
+          return obj;
+        })
+      : ""
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,9 +61,33 @@ const Form = ({ setShowModal, formType }) => {
     const nextArr = FormSkill.map((el, i) => {
       // console.log(i);
       if (i === +id) {
-        console.log("lom");
+        // console.log("lom");
         return {
           ...FormSkill[id],
+          [name]: value,
+        };
+      } else {
+        // console.log("kaw");
+        return el;
+      }
+    });
+    console.log(nextArr);
+    setFormSkill(nextArr);
+  };
+
+  const HandleSkillEdit = (e) => {
+    console.log("ihza<><><><><");
+    console.log(FormSkillEdit.name);
+    const id = e.target.id;
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log(id, name, value);
+    const nextArr = FormSkillEdit.map((el, i) => {
+      // console.log(i);
+      if (i === +id) {
+        console.log("lom");
+        return {
+          ...FormSkillEdit[id],
           [name]: value,
         };
       } else {
@@ -44,8 +96,9 @@ const Form = ({ setShowModal, formType }) => {
       }
     });
     console.log(nextArr);
-    setFormSkill(nextArr);
+    setFormSkillEdit(nextArr);
   };
+  // const navigate = useNavigate();
 
   useEffect(() => {
     setTypeForm(formType);
@@ -55,6 +108,19 @@ const Form = ({ setShowModal, formType }) => {
   const handleAddFormSkill = (e) => {
     e.preventDefault();
     setFormSkill([...FormSkill, initialSkill]);
+    // console.log(FormSkill);
+  };
+  const handleAddFormSkillEdit = (e) => {
+    console.log(FormSkillEdit);
+    // console.log("lontong");
+    e.preventDefault();
+    setFormSkillEdit([
+      ...FormSkillEdit,
+      {
+        name: "",
+        level: "choose level",
+      },
+    ]);
     // console.log(FormSkill);
   };
 
@@ -68,11 +134,32 @@ const Form = ({ setShowModal, formType }) => {
       [name]: value,
     });
   };
+
+  const handleChangeEdit = (e) => {
+    // console.log("loon");
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setFormEdit({
+      ...formEdit,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(formAdd);
     // console.log(FormSkill);
-    dispatch(AddJob(formAdd, FormSkill));
+    dispatch(AddJob(formAdd, FormSkill)).then(() => setShowModal(false));
+  };
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    console.log(FormSkillEdit);
+    console.log(formEdit);
+    // console.log(FormSkill);
+    dispatch(EditJobs(formEdit, FormSkillEdit, job.id)).then(() =>
+      setShowModal(false)
+    );
   };
   if (loading) {
     return <h1>loading...</h1>;
@@ -88,7 +175,9 @@ const Form = ({ setShowModal, formType }) => {
             <div className="border-0  shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
               {/*header*/}
               <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                <h3 className="text-3xl font-semibold">ADD NEW JOB</h3>
+                <h3 className="text-3xl font-semibold">
+                  {formType === "Form Add" ? "ADD NEW JOB" : "EDIT JOB"}
+                </h3>
                 <button
                   className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                   onClick={() => setShowModal(false)}
@@ -220,6 +309,129 @@ const Form = ({ setShowModal, formType }) => {
                       <button
                         type="submit"
                         onClick={handleSubmit}
+                        className="mt-5 text-white bg-red-1000 border border-red-1000 focus:outline-none  font-medium text-sm px-5 py-2.5 mr-2 mb-2  flex flex-row gap-2 justify-center items-center w-full h-10 shadow-5xl hover:translate-x-1 hover:translate-y-1 hover:shadow-none ease-linear duration-100 "
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </>
+              ) : null}
+              {formType === "Form Edit" ? (
+                <>
+                  {/* {JSON.stringify(job)} */}
+                  <form action="">
+                    <div className="relative p-6 flex-auto">
+                      <div className="flex flex-col gap-4">
+                        <div>
+                          <label className=" font-semibold">Title</label>
+                          <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value={formEdit.title}
+                            onChange={handleChangeEdit}
+                            aria-describedby="helper-text-explanation"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Input your title"
+                          />
+                        </div>
+                        <div>
+                          <label className=" font-semibold">Description</label>
+                          <input
+                            type="description"
+                            id="description"
+                            name="description"
+                            value={formEdit.description}
+                            onChange={handleChangeEdit}
+                            aria-describedby="helper-text-explanation"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Input your description"
+                          />
+                        </div>
+                        <div>
+                          <label className=" font-semibold">Job Type</label>
+                          <input
+                            type="jobType"
+                            id="jobType"
+                            name="jobType"
+                            value={formEdit.jobType}
+                            onChange={handleChangeEdit}
+                            aria-describedby="helper-text-explanation"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Input your jobType"
+                          />
+                        </div>
+                        <div>
+                          <label className=" font-semibold">Company</label>
+                          <div class="mb-3 w-full">
+                            <select
+                              name="company"
+                              value={formEdit.companyId}
+                              onChange={handleChangeEdit}
+                              id="countries"
+                              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            >
+                              <option selected>Choose a company</option>
+                              {companies.map((company) => {
+                                return (
+                                  <option value={company.id}>
+                                    {company.name}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          </div>
+                          {FormSkillEdit.map((e, index) => {
+                            return (
+                              <div className="flex flex-row space-x-4">
+                                <div className="w-1/2">
+                                  <label htmlFor="">Skill</label>
+
+                                  <input
+                                    type="text"
+                                    id={index}
+                                    name="name"
+                                    value={FormSkillEdit[index].name}
+                                    onChange={HandleSkillEdit}
+                                    aria-describedby="helper-text-explanation"
+                                    className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Input your company"
+                                  />
+                                </div>
+                                <div className="w-1/2">
+                                  <label htmlFor="">Level</label>
+
+                                  <div class="mb-3 w-full">
+                                    <select
+                                      name="level"
+                                      value={FormSkillEdit[index].level}
+                                      onChange={HandleSkillEdit}
+                                      id={index}
+                                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    >
+                                      <option selected>
+                                        {FormSkillEdit[index].level}
+                                      </option>
+                                      <option value="Beginner">Beginner</option>
+                                      <option value="Intermediet">
+                                        Intermediet
+                                      </option>
+                                      <option value="Expert">Expert</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                          <button onClick={handleAddFormSkillEdit}>
+                            Add Skill
+                          </button>
+                        </div>
+                      </div>
+                      <button
+                        type="submit"
+                        onClick={handleEditSubmit}
                         className="mt-5 text-white bg-red-1000 border border-red-1000 focus:outline-none  font-medium text-sm px-5 py-2.5 mr-2 mb-2  flex flex-row gap-2 justify-center items-center w-full h-10 shadow-5xl hover:translate-x-1 hover:translate-y-1 hover:shadow-none ease-linear duration-100 "
                       >
                         Submit

@@ -4,6 +4,7 @@ import {
   JOB_FETCH,
   LOADING_FALSE,
   LOADING_TRUE,
+  SKILL_FETCH,
 } from "../actionType";
 // import { logger } from "./middlewares/logger";
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   user: [],
   job: {},
   company: {},
+  skills: [],
 };
 
 function jobReducer(state = initialState, action) {
@@ -40,7 +42,7 @@ function jobReducer(state = initialState, action) {
       return {
         ...state,
         jobs: action.payload.rows,
-
+        // skills: action.payload.rows.Skills,
         // companies: action.payload.rows.company,
         // user: action.payload.rows.user,
       };
@@ -49,6 +51,12 @@ function jobReducer(state = initialState, action) {
         ...state,
         job: action.payload,
         company: action.payload.company,
+      };
+    case SKILL_FETCH:
+      // console.log(action.payload);
+      return {
+        ...state,
+        skills: action.payload,
       };
     default:
       return state;

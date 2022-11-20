@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { RegisterAdmin } from "../store/action";
 
 const FormRegisterLogin = ({ setShowModal, formType }) => {
@@ -13,7 +13,7 @@ const FormRegisterLogin = ({ setShowModal, formType }) => {
   });
   const [typeForm, setTypeForm] = useState(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
   useEffect(() => {
     setTypeForm(formType);
   }, []);
