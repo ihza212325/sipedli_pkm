@@ -14,20 +14,22 @@ const CardJob = ({ job }) => {
         className="p-4 w-96 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
       >
         {/* heading Card */}
-        <div className="flex flex-row">
-          <img src={job.company.companyLogo} alt="" className="w-12 h-12" />
-          <div>
-            <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-              {job.title}
-            </h5>
-            <a href="test">
-              <p className="mb-2 text-base tracking-tight text-gray-900 dark:text-white">
-                {job.company.name}
-              </p>
-            </a>
+        <div className="flex flex-row justify-between">
+          <div className="flex flex-row">
+            <img src={job.Company.companyLogo} alt="" className="w-12 h-12" />
+            <div>
+              <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                {job.title}
+              </h5>
+              <a href="test">
+                <p className="mb-2 text-base tracking-tight text-gray-900 dark:text-white">
+                  {job.Company.name}
+                </p>
+              </a>
+            </div>
           </div>
           <svg
-            className="w-12 h-12"
+            className="w-12 h-12 text-yellow-1000"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +52,7 @@ const CardJob = ({ job }) => {
                 clipRule="evenodd"
               ></path>
             </svg>
-            <p>{job.company.location}</p>
+            <p>{job.Company.location}</p>
           </div>
           <div className="flex flex-row space-x-3">
             <svg

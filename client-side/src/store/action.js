@@ -1,22 +1,25 @@
-import {
-  ERROR_MESSAGE,
-  JOB_DETAIL,
-  JOB_FETCH,
-  LOADING_FALSE,
-} from "./actionType";
+import { ERROR_MESSAGE, JOB_DETAIL, JOB_FETCH, LOADING } from "./actionType";
+const BASE_URL = "http://localhost:3000";
 
 export const fetchJob = () => {
   return (dispatch) => {
-    console.log("ini dari action fetch");
-    dispatch({
-      type: "loading/true",
-    });
-    fetch("http://localhost:3000/jobs?_expand=company&_expand=user")
+    dispatch({ type: LOADING, payload: true });
+    fetch(BASE_URL + "/pub", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        access_token: localStorage.getItem("access_token"),
+      },
+    })
       .then((res) => {
-        if (!res.ok) throw new Error("Fetch Error");
+        if (!res.ok) {
+          throw new Error("fetch error");
+        }
         return res.json();
       })
       .then((data) => {
+        // console.log(data);
         dispatch({
           type: JOB_FETCH,
           payload: data,
@@ -28,26 +31,30 @@ export const fetchJob = () => {
           payload: err.message,
         })
       )
-      .finally(() =>
-        dispatch({
-          type: LOADING_FALSE,
-        })
-      );
+      .finally(() => dispatch({ type: LOADING, payload: false }));
   };
 };
 
-export const fetchJobDetail = (id) => {
+export const fetchDetailJob = (id) => {
+  console.log("lontongggggg");
   return (dispatch) => {
-    console.log("ini dari action fetch");
-    dispatch({
-      type: "loading/true",
-    });
-    fetch(`http://localhost:3000/jobs/${id}?_expand=company&_expand=user`)
+    dispatch({ type: LOADING, payload: true });
+    fetch(BASE_URL + "/pub/" + id, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        // access_token: localStorage.getItem("access_token"),
+      },
+    })
       .then((res) => {
-        if (!res.ok) throw new Error("Fetch Error");
+        if (!res.ok) {
+          throw new Error("fetch error");
+        }
         return res.json();
       })
       .then((data) => {
+        console.log(data);
         dispatch({
           type: JOB_DETAIL,
           payload: data,
@@ -59,15 +66,6 @@ export const fetchJobDetail = (id) => {
           payload: err.message,
         })
       )
-      .finally(() =>
-        dispatch({
-          type: LOADING_FALSE,
-        })
-      );
+      .finally(() => dispatch({ type: LOADING, payload: false }));
   };
-};
-
-export const postLogin = (e) => {
-  e.preventDefault();
-  console.log("formLogin");
 };

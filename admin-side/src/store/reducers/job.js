@@ -18,8 +18,8 @@ const initialState = {
 };
 
 function jobReducer(state = initialState, action) {
-  console.log("anjay");
-  console.log(action.type);
+  // console.log("anjay");
+  // console.log(action.type);
   switch (action.type) {
     case ERROR_MESSAGE:
       return {
@@ -38,7 +38,7 @@ function jobReducer(state = initialState, action) {
       };
     case JOB_FETCH:
       // console.log("lontongssass");
-      console.log(action.payload.rows);
+      // console.log(action.payload.rows);
       return {
         ...state,
         jobs: action.payload.rows,

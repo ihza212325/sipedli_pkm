@@ -1,11 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  redirect,
-} from "react-router-dom";
+// import ReactDOM from "react-dom/client";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import Home from "../views/Home";
 import Jobs from "../views/Jobs";
 import Dashboard from "../views/Dashboard";
@@ -31,7 +26,7 @@ const router = createBrowserRouter([
       }
     },
     children: [
-      { path: "", element: <Dashboard /> },
+      { path: "", element: <Jobs /> },
       { path: "jobs", element: <Jobs /> },
       { path: "company", element: <Company /> },
     ],

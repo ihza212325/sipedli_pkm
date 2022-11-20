@@ -1,10 +1,4 @@
-import {
-  ERROR_MESSAGE,
-  JOB_DETAIL,
-  JOB_FETCH,
-  LOADING_FALSE,
-  LOADING_TRUE,
-} from "../actionType";
+import { ERROR_MESSAGE, JOB_DETAIL, JOB_FETCH, LOADING } from "../actionType";
 // import { logger } from "./middlewares/logger";
 const initialState = {
   loading: false,
@@ -13,6 +7,7 @@ const initialState = {
   user: [],
   job: {},
   company: {},
+  skills: [],
 };
 
 function jobReducer(state = initialState, action) {
@@ -24,27 +19,23 @@ function jobReducer(state = initialState, action) {
         ...state,
         error: action.payload,
       };
-    case LOADING_FALSE:
+    case LOADING:
       return {
         ...state,
-        loading: false,
-      };
-    case LOADING_TRUE:
-      return {
-        ...state,
-        loading: true,
+        loading: action.payload,
       };
     case JOB_FETCH:
       console.log("lontongsss");
       return {
         ...state,
-        jobs: action.payload,
+        jobs: action.payload.rows,
       };
     case JOB_DETAIL:
       return {
         ...state,
         job: action.payload,
-        company: action.payload.company,
+        company: action.payload.Company,
+        skills: action.payload.Skills,
       };
     default:
       return state;

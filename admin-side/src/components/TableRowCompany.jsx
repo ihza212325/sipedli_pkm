@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { DeleteCompany } from "../store/action";
+import { DeleteCompany, Swalert } from "../store/action";
 import FormCompany from "./FormCompany";
 
 const TableRowCompany = ({ company }) => {
@@ -10,7 +10,9 @@ const TableRowCompany = ({ company }) => {
   const handleDelete = (e) => {
     e.preventDefault();
     // console.log(company.id);
-    dispatch(DeleteCompany(company.id));
+    dispatch(DeleteCompany(company.id)).then(() => {
+      dispatch(Swalert("success", "Berhassil Delete"));
+    });
   };
   return (
     <>

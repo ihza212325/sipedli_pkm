@@ -37,16 +37,16 @@ class JobController {
         };
       }
       // console.log(req.user.role);
-      if (req.user.role === "admin") {
-        option.include = [
-          { model: Company },
-          {
-            model: User,
-            attributes: { exclude: ["password"] },
-          },
-          { model: Skill },
-        ];
-      }
+      // if (req.user.role === "admin") {
+      option.include = [
+        { model: Company },
+        {
+          model: User,
+          attributes: { exclude: ["password"] },
+        },
+        { model: Skill },
+      ];
+      // }
 
       // console.log(option);
       const allJobs = await Job.findAndCountAll(option);

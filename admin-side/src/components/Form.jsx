@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { AddJob, EditJobs, fetchCompany, fetchJob } from "../store/action";
+// import { useNavigate } from "react-router-dom";
+import { AddJob, EditJobs, fetchCompany } from "../store/action";
 // import { RegisterAdmin } from "../store/action";
 
 const Form = ({ setShowModal, formType, job }) => {
@@ -21,8 +21,8 @@ const Form = ({ setShowModal, formType, job }) => {
 
   // let editInitialSkills = job.Skills
 
-  const { companies, error, loading } = useSelector((state) => state.company);
-  const [typeForm, setTypeForm] = useState(null);
+  const { companies, loading } = useSelector((state) => state.company);
+  // const [typeForm, setTypeForm] = useState(null);
   // const [addFormskill, setAddFormSkill] = useState(1);
   let initialSkill = {
     name: "",
@@ -49,7 +49,7 @@ const Form = ({ setShowModal, formType, job }) => {
       : ""
   );
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const HandleSkill = (e) => {
     // console.log("ihza");
@@ -101,7 +101,7 @@ const Form = ({ setShowModal, formType, job }) => {
   // const navigate = useNavigate();
 
   useEffect(() => {
-    setTypeForm(formType);
+    // setTypeForm(formType);
     dispatch(fetchCompany());
   }, []);
   // console.log(addFormskill, "<<<<<<<?????");
@@ -148,18 +148,24 @@ const Form = ({ setShowModal, formType, job }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(formAdd);
-    // console.log(FormSkill);
-    dispatch(AddJob(formAdd, FormSkill)).then(() => setShowModal(false));
+    dispatch(AddJob(formAdd, FormSkill)).then((data) => {
+      if (data === "error") {
+        setShowModal(true);
+      } else {
+        setShowModal(false);
+      }
+    });
   };
   const handleEditSubmit = (e) => {
     e.preventDefault();
-    console.log(FormSkillEdit);
-    console.log(formEdit);
-    // console.log(FormSkill);
-    dispatch(EditJobs(formEdit, FormSkillEdit, job.id)).then(() =>
-      setShowModal(false)
-    );
+    dispatch(EditJobs(formEdit, FormSkillEdit, job.id)).then((data) => {
+      console.log(data);
+      if (data === "error") {
+        setShowModal(true);
+      } else {
+        setShowModal(false);
+      }
+    });
   };
   if (loading) {
     return <h1>loading...</h1>;
@@ -246,7 +252,7 @@ const Form = ({ setShowModal, formType, job }) => {
                           <div class="mb-3 w-full">
                             <select
                               name="company"
-                              value={formAdd.company}
+                              value={formAdd.companyId}
                               onChange={handleChangeAdd}
                               id="countries"
                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

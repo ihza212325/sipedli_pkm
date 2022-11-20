@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Navigate, redirect, useNavigate } from "react-router-dom";
-import { DeleteJob, EditJobs, fetchJob, fetchSkill } from "../store/action";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { DeleteJob, Swalert } from "../store/action";
 import Form from "./Form";
 export const TableRowJobs = ({ index, job, skill }) => {
   // const dispatch = useDispatch();
@@ -11,7 +10,9 @@ export const TableRowJobs = ({ index, job, skill }) => {
   const handleDelete = (e) => {
     e.preventDefault();
     // console.log(job.id);
-    dispatch(DeleteJob(job.id));
+    dispatch(DeleteJob(job.id)).then(() => {
+      dispatch(Swalert("success", "Berhassil Delete"));
+    });
   };
 
   return (

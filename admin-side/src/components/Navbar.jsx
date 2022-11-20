@@ -1,10 +1,15 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { Swalert } from "../store/action";
+// import Swal from "sweetalert2";
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const HandleLogOut = () => {
     localStorage.clear();
+    // Swal.fire("Any fool can use a computer");
     navigate("/");
+    dispatch(Swalert("error", "Berhasil Logout"));
   };
   return (
     <>

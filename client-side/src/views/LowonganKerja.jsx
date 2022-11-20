@@ -1,8 +1,8 @@
 import Aside from "../components/Aside";
 import CardJob from "../components/CardJob";
 import { useState, useEffect } from "react";
-import { Navigate, useNavigate, Link, Outlet } from "react-router-dom";
-import NavBar from "../components/Navbar";
+import { Navigate, useNavigate } from "react-router-dom";
+// import NavBar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchJob } from "../store/action";
 const LowonganKerja = () => {
@@ -19,7 +19,7 @@ const LowonganKerja = () => {
   if (loading) {
     return <h1>loading....</h1>;
   }
-
+  // console.log(jobs);
   return (
     <>
       <div className="relative">

@@ -6,7 +6,7 @@ import TableRowCompany from "../components/TableRowCompany";
 import { fetchCompany } from "../store/action";
 const Company = () => {
   const dispatch = useDispatch();
-  const { companies, error, loading } = useSelector((state) => state.company);
+  const { companies } = useSelector((state) => state.company);
   useEffect(() => {
     dispatch(fetchCompany());
   }, []);
@@ -93,8 +93,8 @@ const Company = () => {
             {/* <TableMovie /> */}
             {/* <TableRowJobs /> */}
             {companies.map((company) => {
-              console.log("satu");
-              return <TableRowCompany key={company.id} company={company} />;
+              // console.log("satu");
+              return <TableRowCompany company={company} />;
             })}
             {/* <TableRowCompany />; */}
           </tbody>

@@ -27,7 +27,7 @@ const Login = () => {
     e.preventDefault();
     // console.log(formLogin);
     dispatch(loginAdmin(formLogin)).then(() => {
-      console.log("ihzasssss");
+      // console.log("ihzasssss");
       navigate("/home");
     });
   };

@@ -1,4 +1,4 @@
-import { COMPANY_FETCH, ERROR_MESSAGE, LOADING, LOGIN } from "../actionType";
+import { ERROR_MESSAGE, LOADING, LOGIN } from "../actionType";
 
 const initialState = {
   error: null,

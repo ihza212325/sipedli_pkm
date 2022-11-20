@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import {
-  AddCompany,
-  AddJob,
-  EditCompany,
-  EditJobs,
-  fetchCompany,
-  fetchJob,
-} from "../store/action";
+import { useDispatch } from "react-redux";
+import { AddCompany, EditCompany } from "../store/action";
 // import { RegisterAdmin } from "../store/action";
 
 const FormCompany = ({ setShowModal, formType, company }) => {
@@ -28,12 +20,12 @@ const FormCompany = ({ setShowModal, formType, company }) => {
   });
 
   //   const { companies, error, loading } = useSelector((state) => state.company);
-  const [typeForm, setTypeForm] = useState(null);
+  //   const [typeForm, setTypeForm] = useState(null);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setTypeForm(formType);
+    // setTypeForm(formType);
     // dispatch(fetchCompany());
   }, []);
 
@@ -60,16 +52,27 @@ const FormCompany = ({ setShowModal, formType, company }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formAdd);
+    // console.log(formAdd);
     // AddCompany
-    dispatch(AddCompany(formAdd)).then(() => setShowModal(false));
+    dispatch(AddCompany(formAdd)).then((data) => {
+      if (data === "error") {
+        setShowModal(true);
+      } else {
+        setShowModal(false);
+      }
+    });
   };
-
   const handleSubmitEdit = (e) => {
     e.preventDefault();
     console.log(formEdit);
 
-    dispatch(EditCompany(formEdit, company.id)).then(() => setShowModal(false));
+    dispatch(EditCompany(formEdit, company.id)).then((data) => {
+      if (data === "error") {
+        setShowModal(true);
+      } else {
+        setShowModal(false);
+      }
+    });
   };
 
   //   if (loading) {

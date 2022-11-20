@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { TableRowJobs } from "../components/TableRowJobs";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchJob, fetchSkill } from "../store/action";
+import { fetchJob } from "../store/action";
 import Form from "../components/Form";
 
 const Job = () => {
-  const { jobs, skills, loading, error } = useSelector((state) => state.jobs);
+  const { jobs, loading } = useSelector((state) => state.jobs);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {

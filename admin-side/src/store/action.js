@@ -1,15 +1,14 @@
 // import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 import {
   COMPANY_FETCH,
   ERROR_MESSAGE,
-  JOB_DETAIL,
   JOB_FETCH,
   LOADING,
   LOADING_FALSE,
   LOADING_TRUE,
   LOGIN,
-  SKILL_FETCH,
 } from "./actionType";
 const BASE_URL = "http://localhost:3000";
 
@@ -86,7 +85,7 @@ export const fetchCompany = () => {
 export const loginAdmin = (data) => {
   const { email, password } = data;
 
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({ type: LOADING, payload: true });
     return fetch(BASE_URL + "/users/login", {
       method: "POST",
@@ -98,7 +97,7 @@ export const loginAdmin = (data) => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error("gagal post login");
+          throw new Error("Email or Password Invalid");
         }
         return res.json();
       })
@@ -111,9 +110,13 @@ export const loginAdmin = (data) => {
           type: LOGIN,
           payload: true,
         });
+        dispatch(Swalert("success", "Berhasil Login"));
+
         // navigate("/home");
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        dispatch(Swalert("error", err.message));
+      })
       .finally(() =>
         dispatch({
           type: LOADING,
@@ -126,7 +129,7 @@ export const loginAdmin = (data) => {
 export const RegisterAdmin = (data) => {
   const { username, email, password, phoneNumber, address } = data;
 
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({ type: LOADING, payload: true });
     return fetch(BASE_URL + "/users/register", {
       method: "POST",
@@ -139,21 +142,26 @@ export const RegisterAdmin = (data) => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error("gagal post register");
+          // throw new Error("gagal post register");
         }
+        // console.log(await res.json());
         return res.json();
       })
       .then((data) => {
-        // console.log("berhasil");
+        // console.log(data.msg);
+        if (Array.isArray(data.msg)) {
+          throw Error(data.msg);
+        }
+        dispatch(Swalert("success", "Berhasil Register"));
+        return "success";
         // console.log(data);
-        // dispatch({
-        //   type: LOGIN,
-        //   payload: true,
-        // });
-        // navigate("/home");
-        console.log(data);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        // console.log(err["Error"]);
+        // console.log("lontonf");
+        dispatch(Swalert("error", err));
+        return "error";
+      })
       .finally(() =>
         dispatch({
           type: LOADING,
@@ -164,9 +172,9 @@ export const RegisterAdmin = (data) => {
 };
 
 export const AddJob = (formAdd, FormSkill) => {
-  console.log(formAdd);
-  console.log(FormSkill);
-  return (dispatch) => {
+  // console.log(formAdd);
+  // console.log(FormSkill);
+  return async (dispatch) => {
     dispatch({ type: LOADING_TRUE });
     return fetch(BASE_URL + "/jobs", {
       method: "POST",
@@ -179,22 +187,30 @@ export const AddJob = (formAdd, FormSkill) => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error("post job error");
+          // throw new Error("post job error");
         }
         return res.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
+        if (Array.isArray(data.msg)) {
+          throw Error(data.msg);
+        }
+        dispatch(Swalert("success", "Berhassil Add Job"));
         dispatch(fetchJob());
+        return "success";
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        dispatch(Swalert("error", err));
+        return "error";
+      })
       .finally(() => dispatch({ type: LOADING_FALSE }));
   };
 };
 
 export const EditJobs = (formEdit, FormSkillEdit, id) => {
   // console.log("momo");
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({ type: LOADING_TRUE });
     return fetch(BASE_URL + "/jobs/" + id, {
       method: "PUT",
@@ -206,32 +222,30 @@ export const EditJobs = (formEdit, FormSkillEdit, id) => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error("fetch error");
+          // throw new Error("fetch error");
         }
         return res.json();
       })
       .then((data) => {
-        console.log(data);
-        // console.log("<<<<<<<<<<<<");
-        // dispatch({
-        //   type: JOB_DETAIL,
-        //   payload: data,
-        // });
-        // fetchJob();
+        // console.log(data);
+        if (Array.isArray(data.msg)) {
+          throw Error(data.msg);
+        }
+        dispatch(Swalert("success", "Berhassil Add Job"));
         dispatch(fetchJob());
+        return "success";
       })
-      .catch((err) =>
-        dispatch({
-          type: ERROR_MESSAGE,
-          payload: err.message,
-        })
-      )
+      .catch((err) => {
+        // console.log("masuk sini");
+        dispatch(Swalert("error", err));
+        return "error";
+      })
       .finally(() => dispatch({ type: LOADING_FALSE }));
   };
 };
 export const DeleteJob = (id) => {
   // console.log("momo");
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({ type: LOADING_TRUE });
     return fetch(BASE_URL + "/jobs/" + id, {
       method: "DELETE",
@@ -247,14 +261,9 @@ export const DeleteJob = (id) => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
-        console.log("berhasil delete");
-        // fetchJob();
-        // console.log("<<<<<<<<<<<<");
-        // dispatch({
-        //   type: JOB_DETAIL,
-        //   payload: data,
-        // });
+        // console.log(data);
+        // console.log("berhasil delete");
+
         dispatch(fetchJob());
       })
       .catch((err) =>
@@ -270,7 +279,7 @@ export const DeleteJob = (id) => {
 export const AddCompany = (data) => {
   const { name, companyLogo, location, email, description } = data;
 
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({ type: LOADING, payload: true });
     return fetch(BASE_URL + "/company", {
       method: "POST",
@@ -283,22 +292,24 @@ export const AddCompany = (data) => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error("gagal post register");
+          // throw new Error("gagal post register");
         }
         return res.json();
       })
       .then((data) => {
-        // console.log("berhasil");
         // console.log(data);
-        // dispatch({
-        //   type: LOGIN,
-        //   payload: true,
-        // });
-        // navigate("/home");
-        console.log(data);
+        if (Array.isArray(data.msg)) {
+          throw Error(data.msg);
+        }
+        dispatch(Swalert("success", "Berhassil Add Company"));
         dispatch(fetchCompany());
+        // dispatch(fetchJob());
+        return "success";
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        dispatch(Swalert("error", err));
+        return "error";
+      })
       .finally(() =>
         dispatch({
           type: LOADING,
@@ -323,15 +334,23 @@ export const EditCompany = (data, id) => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error("gagal post register");
+          // throw new Error("gagal post register");
         }
         return res.json();
       })
       .then((data) => {
-        console.log(data);
+        if (Array.isArray(data.msg)) {
+          throw Error(data.msg);
+        }
+        dispatch(Swalert("success", "Berhassil Edit Company"));
         dispatch(fetchCompany());
+        // dispatch(fetchJob());
+        return "success";
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        dispatch(Swalert("error", err));
+        return "error";
+      })
       .finally(() =>
         dispatch({
           type: LOADING,
@@ -343,7 +362,7 @@ export const EditCompany = (data, id) => {
 
 export const DeleteCompany = (id) => {
   // console.log("momo");
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({ type: LOADING_TRUE });
     return fetch(BASE_URL + "/company/" + id, {
       method: "DELETE",
@@ -359,8 +378,8 @@ export const DeleteCompany = (id) => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
-        console.log("berhasil delete");
+        // console.log(data);
+        // console.log("berhasil delete");
         // fetchJob();
         // console.log("<<<<<<<<<<<<");
         // dispatch({
@@ -376,5 +395,26 @@ export const DeleteCompany = (id) => {
         })
       )
       .finally(() => dispatch({ type: LOADING_FALSE }));
+  };
+};
+
+export const Swalert = (icon, title) => {
+  return (dispatch) => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+
+    Toast.fire({
+      icon: icon,
+      title: title,
+    });
   };
 };
