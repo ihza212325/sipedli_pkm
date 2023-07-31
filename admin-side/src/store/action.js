@@ -10,12 +10,13 @@ import {
   LOADING_TRUE,
   LOGIN,
 } from "./actionType";
-const BASE_URL = "https://glitss-production.up.railway.app";
+const BASE_URL = "http://localhost:3000";
 
 export const fetchJob = () => {
+  console.log("masuk ini");
   return (dispatch) => {
     dispatch({ type: LOADING_TRUE });
-    fetch(BASE_URL + "/jobs", {
+    fetch(BASE_URL + "/poster/all", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

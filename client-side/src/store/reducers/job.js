@@ -25,10 +25,9 @@ function jobReducer(state = initialState, action) {
         loading: action.payload,
       };
     case JOB_FETCH:
-      console.log("lontongsss");
       return {
         ...state,
-        jobs: action.payload.rows,
+        jobs: action.payload,
       };
     case JOB_DETAIL:
       return {

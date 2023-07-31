@@ -1,7 +1,32 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { loginAdmin } from "../store/action";
 
 const FormLogin = () => {
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  const [formLogin, setFormLogin] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    // console.log("loon");
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setFormLogin({
+      ...formLogin,
+      [name]: value,
+    });
+  };
+  const handleSubmitLogin = (e) => {
+    e.preventDefault();
+    // console.log(formLogin, "jlan");
+    dispatch(loginAdmin(formLogin)).then((e) => {
+      console.log(e);
+    });
+  };
   return (
     <>
       <button
@@ -14,9 +39,12 @@ const FormLogin = () => {
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative  my-6 mx-auto w-5/12">
+            <div className="relative  md:my-6 mx-0 md:mx-auto w-full md:w-5/12">
               {/*content*/}
-              <div className="border-0  shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <form
+                onSubmit={handleSubmitLogin}
+                className="border-0  shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
+              >
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">Login</h3>
@@ -47,18 +75,25 @@ const FormLogin = () => {
                     <input
                       type="email"
                       id="email"
+                      name="email"
+                      value={formLogin.email}
+                      onChange={handleChange}
                       aria-describedby="helper-text-explanation"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Input your email"
                     />
                     <input
-                      type="email"
-                      id="email"
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={formLogin.password}
+                      onChange={handleChange}
                       aria-describedby="helper-text-explanation"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Input your Password"
                     />
                   </div>
+
                   <div className="py-4">
                     <a href="test">Forgot your password?</a>
                   </div>
@@ -149,7 +184,7 @@ const FormLogin = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>

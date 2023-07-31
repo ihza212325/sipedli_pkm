@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
 import { AddJob, EditJobs, fetchCompany } from "../store/action";
-// import { RegisterAdmin } from "../store/action";
 
 const Form = ({ setShowModal, formType, job }) => {
   const [formAdd, setFormAdd] = useState({
@@ -19,22 +17,12 @@ const Form = ({ setShowModal, formType, job }) => {
     companyId: formType === "Form Edit" ? job.companyId : "",
   });
 
-  // let editInitialSkills = job.Skills
-
   const { companies, loading } = useSelector((state) => state.company);
-  // const [typeForm, setTypeForm] = useState(null);
-  // const [addFormskill, setAddFormSkill] = useState(1);
+
   let initialSkill = {
     name: "",
     level: "",
   };
-  // let initialSkillEdit;
-  // if (formType === "Form Edit") {
-  //   initialSkillEdit = {
-  //     name: job.Skills.name,
-  //     level: job.Skills.level,
-  //   };
-  // }
 
   const [FormSkill, setFormSkill] = useState([initialSkill]);
   const [FormSkillEdit, setFormSkillEdit] = useState(
@@ -49,41 +37,30 @@ const Form = ({ setShowModal, formType, job }) => {
       : ""
   );
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
 
   const HandleSkill = (e) => {
-    // console.log("ihza");
     const id = e.target.id;
     const name = e.target.name;
     const value = e.target.value;
-    console.log(id, name, value);
 
     const nextArr = FormSkill.map((el, i) => {
-      // console.log(i);
       if (i === +id) {
-        // console.log("lom");
         return {
           ...FormSkill[id],
           [name]: value,
         };
       } else {
-        // console.log("kaw");
         return el;
       }
     });
-    console.log(nextArr);
     setFormSkill(nextArr);
   };
 
   const HandleSkillEdit = (e) => {
-    console.log("ihza<><><><><");
-    console.log(FormSkillEdit.name);
     const id = e.target.id;
     const name = e.target.name;
     const value = e.target.value;
-    console.log(id, name, value);
     const nextArr = FormSkillEdit.map((el, i) => {
-      // console.log(i);
       if (i === +id) {
         console.log("lom");
         return {
@@ -91,28 +68,23 @@ const Form = ({ setShowModal, formType, job }) => {
           [name]: value,
         };
       } else {
-        console.log("kaw");
         return el;
       }
     });
-    console.log(nextArr);
     setFormSkillEdit(nextArr);
   };
-  // const navigate = useNavigate();
 
   useEffect(() => {
-    // setTypeForm(formType);
     dispatch(fetchCompany());
   }, []);
-  // console.log(addFormskill, "<<<<<<<?????");
+
   const handleAddFormSkill = (e) => {
     e.preventDefault();
     setFormSkill([...FormSkill, initialSkill]);
-    // console.log(FormSkill);
   };
+
   const handleAddFormSkillEdit = (e) => {
     console.log(FormSkillEdit);
-    // console.log("lontong");
     e.preventDefault();
     setFormSkillEdit([
       ...FormSkillEdit,
@@ -121,11 +93,9 @@ const Form = ({ setShowModal, formType, job }) => {
         level: "choose level",
       },
     ]);
-    // console.log(FormSkill);
   };
 
   const handleChangeAdd = (e) => {
-    // console.log("loon");
     const name = e.target.name;
     const value = e.target.value;
 
@@ -136,7 +106,6 @@ const Form = ({ setShowModal, formType, job }) => {
   };
 
   const handleChangeEdit = (e) => {
-    // console.log("loon");
     const name = e.target.name;
     const value = e.target.value;
 
@@ -167,13 +136,9 @@ const Form = ({ setShowModal, formType, job }) => {
       }
     });
   };
-  if (loading) {
-    return <h1>loading...</h1>;
-  }
+
   return (
     <>
-      {/* {typeForm === "Form Add" ? ( */}
-      {/* {JSON.stringify(companies)} */}
       <>
         <div className=" justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
           <div className="relative  my-6 mx-auto w-5/12">

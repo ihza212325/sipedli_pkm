@@ -1,71 +1,150 @@
 import CardMenu from "../components/CardMenu";
+import CarouselMenu from "../components/Carousel";
 import Footer from "../components/Footer";
 import NavBar from "../components/Navbar";
+import quiz from "../images/3754170.jpg";
+import tanya from "../images/Mesa de trabajo 1.svg";
+import posterr from "../images/Artboard 2.svg";
+
 const Home = () => {
+  const array1 = [1, 4, 9, 16];
   return (
     <>
       <NavBar />
-      {/* kuning atas */}
-      <div className="relative bg-yellow-1000">
-        <div className="w-11/12 mx-auto px-4 sm:px-6 ">
-          <div className="flex justify-between items-center border-gray-100 py-5 md:justify-start md:space-x-10 w-full">
-            {/* kiri logo dan menu */}
-            <div className="mb-6 w-full">
-              <div className="text-center font-semibold text-2xl mb-10 mt-5">
-                <p>
-                  Jelajahi <span className="font-extrabold">5000+</span>
-                  pekerjaan baru setiap bulan!
+      <div className="relative bg-blue-1100 pb-72">
+        <div className="w-full justify-center items-center mx-auto px-4 sm:px-6 flex flex-col gap-10">
+          <div className="flex flex-col mt-14 text-center text-6xl font-extrabold">
+            <p className="text-blue-1001 text-7xl md:text-8xl">SIPEDLI </p>{" "}
+            <p>Sistem Peduli Literasi Digital</p>
+          </div>
+          <div className="text-center text-xl font-light">
+            <p>Membuka wawasan Literasi Digitalmu !</p>
+          </div>
+          {/* card tanya  belajar upgrade lamar */}
+          <div className="flex flex-col md:flex-row md:space-x-14 justify-center ">
+            <CardMenu name={"TANYA"} image={tanya} width={40} />
+            <CardMenu name={"POSTER"} image={posterr} width={52} />
+            <CardMenu name={"QUIZ"} image={quiz} width={40} />
+            {/* <CardMenu name={"LAMAR"} /> */}
+          </div>
+        </div>
+      </div>
+      <div className="h-full bg-blue-1001 space-y-10 rounded-t-supermobile md:rounded-t-super flex-col justify-center items-center px-7 md:px-20 py-20 -translate-y-48">
+        <div className="flex justify-center ">
+          <h1 className="text-4xl text-center md:text-6xl font-bold text-white">
+            Indonesia Makin Cakap Digital
+          </h1>
+        </div>
+        <div className="flex flex-col md:flex-row justify-center gap-5 ">
+          <div className="hover:bg-white text-white hover:text-blue-1001 w-full rounded-3xl flex-col items-center justify-center p-3 ">
+            <div className="aspect-[1.5] overflow-hidden rounded-2xl lg:rounded-3xl ">
+              <div className="w-full h-[174px] relative">
+                <img
+                  className="min-w-full min-h-full "
+                  src="https://api-literasidigital.ruangalternative.com/v1/storage/2023-05/b73c5ecd-7353-4181-8752-89ee369a3776-image.jpeg?width=750&quality=75"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div className="p-5  space-y-4">
+              <div>
+                <h1 className="font-bold text-lg capitalize">
+                  kemampuan digital
+                </h1>
+              </div>
+              <div>
+                <p className="text-justify">
+                  Kemampuan individu dalam mengetahui, memahami, dan menggunakan
+                  perangkat keras dan piranti lunak TIK serta sistem operasi
+                  digital dalam kehidupan sehari-hari
                 </p>
               </div>
-              <div className="flex flex-row space-x-7">
-                <input
-                  type="text"
-                  id="default-input"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-1/2"
-                  placeholder="Cari Lowongan"
+            </div>
+          </div>
+          <div className="hover:bg-white text-white hover:text-blue-1001 w-full rounded-3xl flex-col items-center justify-center p-3 ">
+            <div className="aspect-[1.5] overflow-hidden rounded-2xl lg:rounded-3xl ">
+              <div className="w-full h-[174px] relative">
+                <img
+                  className="min-w-full min-h-full "
+                  src="https://api-literasidigital.ruangalternative.com/v1/storage/2023-05/56aa8f99-7586-48d2-9775-d4d289f19cea-image.jpeg?width=2048&quality=75"
+                  alt=""
                 />
-                <input
-                  type="text"
-                  id="default-input"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Lokasi"
+              </div>
+            </div>
+            <div className="p-5  space-y-4">
+              <div>
+                <h1 className="font-bold text-lg capitalize">
+                  etika berdigital
+                </h1>
+              </div>
+              <div>
+                <p className="text-justify">
+                  Kemampuan individu dalam menyadari, mencontohkan, menyesuaikan
+                  diri, mempertimbangkan, dan mengembangkan tata kelola etika
+                  digital (netiquette) dalam kehidupan sehari-hari
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="hover:bg-white text-white hover:text-blue-1001 w-full rounded-3xl flex-col items-center justify-center p-3 ">
+            <div className="aspect-[1.5] overflow-hidden rounded-2xl lg:rounded-3xl ">
+              <div className="w-full h-[174px] relative">
+                <img
+                  className="min-w-full min-h-full "
+                  src="https://api-literasidigital.ruangalternative.com/v1/storage/2023-05/df4643e9-7bd2-4006-8f8d-420d9e29bf7e-image.jpeg?width=2048&quality=75"
+                  alt=""
                 />
-                <a
-                  href="test"
-                  className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-1000 hover:bg-indigo-700 w-40"
-                >
-                  Cari
-                </a>
+              </div>
+            </div>
+            <div className="p-5  space-y-4">
+              <div>
+                <h1 className="font-bold text-lg capitalize">
+                  budaya berdgital
+                </h1>
+              </div>
+              <div>
+                <p className="text-justify">
+                  Kemampuan individu dalam membaca, menguraikan, membiasakan,
+                  memeriksa, dan membangun wawasan kebangsaan, nilai Pancasila
+                  dan Bhinneka Tunggal Ika dalam kehidupan sehari-hari
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="hover:bg-white text-white hover:text-blue-1001 w-full rounded-3xl flex-col items-center justify-center p-3 ">
+            <div className="aspect-[1.5] overflow-hidden rounded-2xl lg:rounded-3xl ">
+              <div className="w-full h-[174px] relative">
+                <img
+                  className="min-w-full min-h-full "
+                  src="https://api-literasidigital.ruangalternative.com/v1/storage/2023-05/fa1b38cd-15fd-40b0-a103-cb287126ced1-image.jpeg?width=2048&quality=75"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div className="p-5  space-y-4">
+              <div>
+                <h1 className="font-bold text-lg capitalize">
+                  keamanan berdigital
+                </h1>
+              </div>
+              <div>
+                <p className="text-justify">
+                  Kemampuan individu dalam mengenali, mempolakan, menerapkan,
+                  menganalisis, menimbang, dan meningkatkan kesadaran keamanan
+                  digital dalam kehidupan sehari-hari
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* slide awal */}
-      <div className="relative bg-blue-1100 mb-20">
-        <div className="w-11/12 mx-auto px-4 sm:px-6 flex flex-col gap-10">
-          <div className=" mt-14 text-center text-6xl font-extrabold">
-            <p>
-              TEMPAT PENGEMBANGAN <br /> KARIER TERBAIK <br />
-              UNTUKMU
-            </p>
-          </div>
-          <div className=" text-center text-xl font-light">
-            <p>
-              Buat keputusan terbaik untuk kariermu dan <br />
-              bangun karier impianmu!
-            </p>
-          </div>
-          {/* card tanya  belajar upgrade lamar */}
-          <div className="flex flex-row space-x-14 justify-center ">
-            <CardMenu name={"TANYA"} />
-            <CardMenu name={"BELAJAR"} />
-            <CardMenu name={"UPGRADE"} />
-            <CardMenu name={"LAMAR"} />
-          </div>
-        </div>
+      <div className="flex-row mb-10 -translate-y-48">
+        <CarouselMenu />
       </div>
-      <Footer />
+      {/* <div className="bg-blue-1001 h-36"></div> */}
+      <div className="">
+        <Footer />
+      </div>
     </>
   );
 };

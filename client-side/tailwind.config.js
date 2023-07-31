@@ -3,6 +3,10 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      borderRadius: {
+        super: "10rem",
+        supermobile: "6rem",
+      },
       colors: {
         yellow: {
           1000: "#FFF240",
@@ -10,6 +14,7 @@ module.exports = {
         blue: {
           1000: "#017eb7",
           1100: "#F2F8FA",
+          1001: "#204F8F",
         },
         red: {
           1000: "#EC272B",

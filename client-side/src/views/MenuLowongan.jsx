@@ -4,7 +4,6 @@ import NavBar from "../components/Navbar";
 const MenuLowongan = () => {
   return (
     <>
-      <NavBar />
       <Outlet />
     </>
   );

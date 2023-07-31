@@ -1,13 +1,27 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import logo from "../images/logo sipedli.png";
 
+import FormRegisterLogin from "./FormRegisterLogin";
+import { loginAdmin } from "../store/action";
+import menuicon from "../images/menu_icon_152582.png";
 const NavBar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [activeMenu, setactiveMenu] = useState(
+    localStorage.getItem("menu") ? localStorage.getItem("menu") : "home"
+  );
   const [showModal, setShowModal] = useState(false);
+  const [showModalRegister, setShowModalRegister] = useState(false);
   const [formLogin, setFormLogin] = useState({
     email: "",
     password: "",
   });
+  const [zindexnav, setzindexnav] = useState("z-30");
+
+  const [modalmobile, setmodalmobile] = useState(false);
   const handleChange = (e) => {
     // console.log("loon");
     const name = e.target.name;
@@ -22,53 +36,198 @@ const NavBar = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formLogin);
+    dispatch(loginAdmin(formLogin)).then((e) => {
+      setShowModal(false);
+    });
   };
+  const handleChangeMenu = () => {};
 
   return (
     <>
-      <div className="relative bg-white">
-        <div className=" w-11/12 mx-auto px-4 sm:px-6">
+      <div className={`relative bg-white ${zindexnav}`}>
+        <div className=" w-11/12 mx-auto px-4 sm:px-6 ">
           <div className="flex justify-between items-center border-b-2 border-gray-100 py-5 md:justify-start md:space-x-10">
             {/* kiri logo dan menu */}
             <div className="flex justify-start lg:w-0 lg:flex-1 space-x-10">
               <a href="test">
-                <span className="sr-only">Workflow</span>
-                <img
-                  className="h-8 w-auto sm:h-10"
-                  src="https://images.glints.com/unsafe/106x0/glints-dashboard.s3.amazonaws.com/images/logo.png"
-                  alt=""
-                />
+                <img className="w-12" src={logo} alt="" />
               </a>
-              <nav className="hidden md:flex space-x-10">
-                <Link
-                  to="/"
-                  className="border-b-2 border-black text-base font-medium text-gray-500 hover:text-gray-900"
-                >
-                  HOME
-                </Link>
-                <Link
-                  to="/lowongan"
-                  className="border-b-2 border-black text-base font-medium text-gray-500 hover:text-gray-900"
-                >
-                  LOWONGAN KERJA
-                </Link>
+              <nav className="hidden md:flex justify-center items-center ">
+                <div>
+                  <Link
+                    to="/"
+                    onClick={() => localStorage.setItem("menu", "home")}
+                    className={`${
+                      activeMenu === "home"
+                        ? "border-b-4 text-blue-1001 font-bold"
+                        : "font-bold text-gray-500 "
+                    } border-black text-base font-medium mx-2 p-1  hover:text-gray-900`}
+                  >
+                    HOME
+                  </Link>
+                </div>
+                {localStorage.getItem("username") && (
+                  <div>
+                    <Link
+                      to="/survey"
+                      onClick={() => localStorage.setItem("menu", "survey")}
+                      className={`${
+                        activeMenu === "survey"
+                          ? "border-b-4 text-blue-1001 font-bold"
+                          : "font-bold text-gray-500 "
+                      } border-black text-base font-medium mx-2 p-1  hover:text-gray-900`}
+                    >
+                      Quiz Literasi
+                    </Link>
+                  </div>
+                )}
+                <div>
+                  <Link
+                    to="/lowongan"
+                    onClick={() => localStorage.setItem("menu", "poster")}
+                    className={`${
+                      activeMenu === "poster"
+                        ? "border-b-4 text-blue-1001 font-bold"
+                        : "font-bold text-gray-500 "
+                    } border-black text-base font-medium mx-2 p-1  hover:text-gray-900`}
+                  >
+                    Poster
+                  </Link>
+                </div>
+                <div>
+                  <Link
+                    to="/tanya"
+                    onClick={() => localStorage.setItem("menu", "tanya")}
+                    className={`${
+                      activeMenu === "tanya"
+                        ? "border-b-4 text-blue-1001 font-bold"
+                        : "font-bold text-gray-500 "
+                    } border-black text-base font-medium mx-2 p-1  hover:text-gray-900`}
+                  >
+                    Tanya
+                  </Link>
+                </div>
+                {localStorage.getItem("username") === "Safira Salma" && (
+                  <div>
+                    <Link
+                      to="/admin"
+                      onClick={() => localStorage.setItem("menu", "admin")}
+                      className={`${
+                        activeMenu === "admin"
+                          ? "border-b-4 text-blue-1001 font-bold"
+                          : "font-bold text-gray-500 "
+                      } border-black text-base font-medium mx-2 p-1  hover:text-gray-900`}
+                    >
+                      ADMIN PAGE
+                    </Link>
+                  </div>
+                )}
+                {/* <div>
+                  <Link
+                    to="/lowongan"
+                    onClick={() => localStorage.setItem("menu", "hub")}
+                    className={`${
+                      activeMenu === "hub"
+                        ? "border-b-4 text-blue-1001 font-bold"
+                        : "font-bold text-gray-500 "
+                    } border-black text-base font-medium mx-2 p-1  hover:text-gray-900`}
+                  >
+                    Tentang Kami
+                  </Link>
+                </div> */}
               </nav>
             </div>
+            <nav className="md:hidden">
+              <img
+                src={menuicon}
+                onClick={() => {
+                  setmodalmobile(!modalmobile);
+                  setzindexnav("z-50");
+                }}
+                className="w-8 h-8"
+                alt=""
+              />
+            </nav>
+            {modalmobile && (
+              <div className="absolute bg-blue-1001 bg-opacity-80 rounded-tl-2xl rounded-bl-2xl rounded-br-2xl m-2 mt-28 mr-16 p-5 right-0 translate-y-20 space-y-3 z-50 backdrop-blur-sm">
+                <div>
+                  <Link
+                    to="/"
+                    onClick={() => localStorage.setItem("menu", "home")}
+                    className=" font-bold text-white text-lg uppercase "
+                  >
+                    Home
+                  </Link>
+                </div>
+                <div>
+                  <Link
+                    to="/survey"
+                    onClick={() => localStorage.setItem("menu", "survey")}
+                    className=" font-bold text-white text-lg uppercase "
+                  >
+                    Quiz
+                  </Link>
+                </div>
+                <div>
+                  <Link
+                    to="/tanya"
+                    onClick={() => localStorage.setItem("menu", "tanya")}
+                    className=" font-bold text-white text-lg uppercase "
+                  >
+                    Tanya
+                  </Link>
+                </div>
+                <div>
+                  <Link
+                    to="/lowongan"
+                    onClick={() => localStorage.setItem("menu", "hub")}
+                    className=" font-bold text-white text-lg uppercase "
+                  >
+                    Poster
+                  </Link>
+                </div>
+                {/* <div>
+                  <Link
+                    to="/lowongan"
+                    onClick={() => localStorage.setItem("menu", "hub")}
+                    className=" font-bold text-white text-lg uppercase "
+                  >
+                    Tentang Kami
+                  </Link>
+                </div> */}
+              </div>
+            )}
 
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-              <button
-                type="button"
-                onClick={() => setShowModal(true)}
-                className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-              >
-                Sign in
-              </button>
-              <Link
-                to="/signup"
-                className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-              >
-                Sign up
-              </Link>
+              {!localStorage.getItem("access_token") && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setShowModal(true)}
+                    className="whitespace-nowrap text-base font-medium mx-2 p-1  hover:text-gray-900"
+                  >
+                    Sign in
+                  </button>
+
+                  <button
+                    onClick={() => setShowModalRegister(true)}
+                    className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium mx-2 p-1 text-white bg-blue-1001 hover:bg-indigo-700"
+                  >
+                    Sign up
+                  </button>
+                </>
+              )}
+              {localStorage.getItem("access_token") && (
+                <button
+                  onClick={() => {
+                    localStorage.clear();
+                    navigate("/");
+                  }}
+                  className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium mx-2 p-1 text-white bg-blue-1001 hover:bg-indigo-700"
+                >
+                  Log Out
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -76,7 +235,7 @@ const NavBar = () => {
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative  my-6 mx-auto w-5/12">
+            <div className="relative  my-6 mx-auto w-full md:w-5/12">
               {/*content*/}
               <div className="border-0  shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
@@ -224,6 +383,14 @@ const NavBar = () => {
           </div>
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
+      ) : null}
+
+      {showModalRegister ? (
+        // ini tempat register
+        <FormRegisterLogin
+          setShowModal={setShowModalRegister}
+          formType={"FormLogin"}
+        />
       ) : null}
     </>
   );

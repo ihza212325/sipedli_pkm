@@ -10,7 +10,6 @@ const Job = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchJob());
-    // dispatch(fetchSkill());
   }, []);
 
   if (loading) {

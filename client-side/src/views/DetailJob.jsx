@@ -7,12 +7,7 @@ import Footer from "../components/Footer";
 import { fetchDetailJob } from "../store/action";
 
 const DetailJob = () => {
-  // const [detail, setDetail] = useState([]);
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(null);
   const { id } = useParams();
-  // console.log(id);
-  // const
   const dispatch = useDispatch();
   const { job, company, skills, loading } = useSelector((state) => state.jobs);
   useEffect(() => {
@@ -283,7 +278,7 @@ const DetailJob = () => {
         </div>
       </div>
       {/* <p>dasdsa</p> */}
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

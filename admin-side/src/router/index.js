@@ -3,7 +3,7 @@ import React from "react";
 import { createBrowserRouter, redirect } from "react-router-dom";
 import Home from "../views/Home";
 import Jobs from "../views/Jobs";
-import Dashboard from "../views/Dashboard";
+// import Dashboard from "../views/Dashboard";
 import Company from "../views/Company";
 import Login from "../views/Login";
 
