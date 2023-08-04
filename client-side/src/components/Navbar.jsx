@@ -50,7 +50,7 @@ const NavBar = () => {
             {/* kiri logo dan menu */}
             <div className="flex justify-start lg:w-0 lg:flex-1 space-x-10">
               <a href="test">
-                <img className="w-12" src={logo} alt="" />
+                {/* <img className="w-12" src={logo} alt="" /> */}
               </a>
               <nav className="hidden md:flex justify-center items-center ">
                 <div>
