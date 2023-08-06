@@ -7,10 +7,10 @@ const Footer = () => {
         {/* kiri */}
         <div className="text-white w-full  md:w-1/2 pr-10 space-y-5">
           {/* <img className="w-32" src="" alt="" /> */}
-          {/* <img src={logo} className="w-72" alt="" /> */}
-          <p className="font-bold text-lg">SIEDI</p>
+          <img src={logo} className="w-72" alt="" />
+          <p className="font-bold text-lg">SIPEDLI</p>
           <p className="font-light text-md text-justify">
-            Selamat datang di SIEDI, Sistem Informasi Digital Literasi yang
+            Selamat datang di SIPEDLI, Sistem Informasi Digital Literasi yang
             memberikan akses mudah dan terpercaya untuk meningkatkan pengetahuan
             dan keterampilan digital Anda. Kami berkomitmen untuk mendukung
             perkembangan literasi digital di era teknologi modern ini. Temukan
@@ -18,7 +18,7 @@ const Footer = () => {
             dirancang untuk membantu Anda memahami dan menguasai dunia digital.
           </p>
           <img src="image.png" alt="" />
-          {/* <p>© PKM PM - STMIK DCI</p> */}
+          <p>© PKM PM - STMIK DCI</p>
         </div>
         {/* kanan */}
         <div className="text-white flex-col justify-center w-full md:w-1/2 space-y-7 items-center ">

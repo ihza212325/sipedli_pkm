@@ -14,8 +14,8 @@ const Home = () => {
       <div className="relative bg-blue-1100 pb-72">
         <div className="w-full justify-center items-center mx-auto px-4 sm:px-6 flex flex-col gap-10">
           <div className="flex flex-col mt-14 text-center text-6xl font-extrabold">
-            <p className="text-blue-1001 text-7xl md:text-8xl">SIEDI </p>{" "}
-            <p>Sistem Edukasi Digital Literasi</p>
+            <p className="text-blue-1001 text-7xl md:text-8xl">SIPEDLI </p>{" "}
+            <p>Sistem Peduli Digital Literasi</p>
           </div>
           <div className="text-center text-xl font-light">
             <p>Membuka wawasan Literasi Digitalmu !</p>

@@ -7,7 +7,7 @@ import {
   SCORE_FETCH,
 } from "./actionType";
 import Swal from "sweetalert2";
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://sipedlibe-production.up.railway.app";
 
 export const RegisterAdmin = (data) => {
   const { username, email, password, phoneNumber, address } = data;
